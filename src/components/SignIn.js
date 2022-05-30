@@ -2,10 +2,11 @@ import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 import { auth } from "../fire";
 
 export function SignIn() {
-	function signInWidthGoogle() {
+	const signInWidthGoogle = async () => {
 		const provider = new GoogleAuthProvider();
-		signInWithRedirect(auth, provider);
-	}
+		await signInWithRedirect(auth, provider);
+	};
+
 	return (
 		<div className="signIn-continer">
 			<h1>ようこそ！</h1>

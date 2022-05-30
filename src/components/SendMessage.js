@@ -1,44 +1,59 @@
 import React, { useState } from "react";
 import { db, auth } from "../fire";
-import firebase from "firebase/compat/app";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { IconContext } from "react-icons";
+import { MdSend } from "react-icons/md";
+import UploadImageFile from "./UploadImageFile";
 
-function SendMessage({ scroll }) {
+function MessageForm({ scroll }) {
 	const [message, setMessage] = useState("");
 
-	function sendMessage(e) {
-		e.preventDefault();
-		const { uid, photoURL } = auth.currentUser;
+	const changeTextArea = (e) => {
+		const text = e.target.value;
+		setMessage(text);
+		const lines = (text + "\n").match(/\n/g).length;
+		e.target.style.height = lines * 1.4 + "em";
+	};
 
-		db.collection("messages").add({
-			text: message,
-			photoURL,
-			uid,
-			createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-		});
-		setMessage("");
-		scroll.current.scrollIntoView({ behavior: "smooth" });
-	}
+	const sendMessage = async (e) => {
+		e.preventDefault();
+		if (message !== "") {
+			const { uid, photoURL } = auth.currentUser;
+			const text = message;
+			setMessage("");
+			const ob = {
+				text,
+				photoURL,
+				uid,
+				createdAt: serverTimestamp(),
+			};
+			await addDoc(collection(db, "messages"), ob);
+			scroll.current.scrollIntoView({ behavior: "smooth" });
+		}
+	};
 	return (
-		<div>
+		<div className="sendForm">
 			<form onSubmit={sendMessage}>
-				<div className="sendMsg">
-					<input
-						style={{
-							width: "78%",
-							fontSize: "15px",
-							fontWeight: "550",
-							marginLeft: "5px",
-							marginBottom: "-3px",
-						}}
-						placeholder="メッセージを入力"
-						type="text"
-						value={message}
-						onChange={(e) => setMessage(e.target.value)}
-					/>
+				<div className="formContainer">
+					<IconContext.Provider value={{ color: "#fff", size: "36px" }}>
+						<UploadImageFile />
+						<textarea
+							value={message}
+							onChange={(e) => {
+								changeTextArea(e);
+							}}
+							className="textArea"
+							rows="1"
+							placeholder="メッセージを入力"
+						></textarea>
+						<button className="sendBtn">
+							<MdSend />
+						</button>
+					</IconContext.Provider>
 				</div>
 			</form>
 		</div>
 	);
 }
 
-export default SendMessage;
+export default MessageForm;

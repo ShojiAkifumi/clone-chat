@@ -1,114 +1,146 @@
 body {
 	background-color: #93aad4;
+	background: url("../public/fujisan.jpg") no-repeat center center;
+	background-attachment: fixed;
+	background-size: cover;
 	margin: 0;
+	height: 100vh;
 	padding: 0;
+	font-family: "Kosugi Maru", sans-serif;
+	scrollbar-width: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
 }
-
 .header {
-	background-color: #222a41;
+	background-color: #93aad4aa;
 	color: white;
-	height: 75px;
 	width: 100%;
 	position: fixed;
 	top: 0;
 	left: 0;
+	z-index: 99;
+}
+.headerContainer {
+	padding: 0 15px;
+	max-width: 768px;
+	margin: 0 auto;
 	display: flex;
 	align-items: center;
-	justify-content: space-around;
+	justify-content: space-between;
 }
-
-img {
-	border-radius: 50%;
-	height: 45px;
-	margin-top: -20px;
-	border: 2px solid black;
-}
-
-p {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-		Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-	font-weight: 500;
-	font-size: 25px;
-	margin-top: 10px;
-	margin-left: 10px;
-	margin-right: 10px;
-	overflow-wrap: break-word;
-}
-
-.msg {
-	display: flex;
-	padding: 20px 10px 0 20px;
-	margin: 20px;
-	border-radius: 3000px;
-	box-shadow: 0 0 10px rgb(164, 164, 164);
-	align-items: center;
-}
-
-.sent {
-	background-color: #85e14b;
-	color: black;
-	border-top-right-radius: 500px;
-	flex-direction: row-reverse;
-	padding: 20px 20px 0 10px;
-	text-align: end;
-	float: right;
-}
-
-.received {
-	background-color: #fafafa;
-	border-top-left-radius: 500px;
-	float: left;
-}
-
-.sendMsg {
-	position: fixed;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	bottom: 0;
-	z-index: 1;
-	border-top: 1px solid lightgray;
-	margin-left: -5px;
-	padding: 10px;
-	padding-bottom: 20px;
-	background-color: #fafafa;
-}
-
-.msgs {
-	margin: 110px 0;
+.chatContainer {
+	margin: 0 auto;
+	max-width: 768px;
+	padding: 110px 40px 80px;
 	display: flex;
 	flex-direction: column;
+	.talk {
+		position: relative;
+		padding: 4px 16px 2px;
+		background-color: #fff6;
+		margin-bottom: 32px;
+		border: solid 3px #fff;
+		border-radius: 5px;
+		width: fit-content;
+		img.talkIcon {
+			position: absolute;
+			border-radius: 50%;
+			height: 30px;
+			border: 2px solid #fff;
+			user-select: none;
+		}
+		&.reply {
+			margin-left: 35px;
+			img.talkIcon {
+				left: -60px;
+				bottom: -10px;
+				transform: scaleX(-1);
+			}
+		}
+		&.me {
+			margin-left: auto;
+			margin-right: 35px;
+			img.talkIcon {
+				right: -60px;
+				bottom: -10px;
+			}
+		}
+		.talkText {
+			font-size: 1.3em;
+			line-height: 1.3em;
+			text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
+				1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
+				1px 0 0 #fff;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+		}
+	}
 }
 
-@media (max-width: 775px) {
-	p {
-		font-size: 20px;
-	}
-	.sent {
-		padding: 10px 10px 0 10px;
-	}
-	.received {
-		padding: 10px 10px 0 10px;
-	}
-	img {
-		height: 35px;
-		margin-top: -10px;
-	}
-}
-
-@media (max-width: 500px) {
-	p {
-		font-size: 15px;
-	}
-	.sent {
-		padding: 7px 7px 0 7px;
-	}
-	.received {
-		padding: 7px 7px 0 7px;
-	}
-	img {
-		height: 30px;
-		margin-top: -7px;
+.sendForm {
+	z-index: 99;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background: linear-gradient(#aaa, #666);
+	.formContainer {
+		margin: 0 auto;
+		max-width: 768px;
+		padding: 15px 15px;
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		label.imageLabel {
+			padding-right: 4px;
+			margin-right: 4px;
+			cursor: pointer;
+			input[type="file"] {
+				display: none;
+			}
+		}
+		.textArea {
+			line-height: 1.4em;
+			font-size: 1.2em;
+			width: calc(100% - 10px);
+			border: none;
+			padding: 5px;
+			background-color: #fafafa;
+			border-radius: 3px;
+			font-family: "Kosugi Maru", sans-serif;
+			resize: none;
+			margin: 0 5px;
+			&:focus {
+				outline: none;
+			}
+			&::placeholder {
+				color: #ccc;
+				font-size: 0.8em;
+			}
+		}
+		.sendBtn {
+			background: none;
+			border: none;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+		}
+		.imageName {
+			color: #fff;
+			max-width: 100px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			button {
+				background: none;
+				border: none;
+				padding: 0;
+				cursor: pointer;
+				svg {
+					max-height: 18px;
+					max-width: 18px;
+				}
+			}
+		}
 	}
 }
