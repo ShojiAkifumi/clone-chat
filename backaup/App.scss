@@ -29,30 +29,44 @@ body {
 	align-items: center;
 	justify-content: space-between;
 }
-.messagesContainer {
+.chatContainer {
 	margin: 0 auto;
 	max-width: 768px;
-	padding: 120px 40px;
+	padding: 110px 40px 80px;
 	display: flex;
 	flex-direction: column;
 	.talk {
 		position: relative;
+		padding: 4px 16px 2px;
+		background-color: #fff6;
 		margin-bottom: 32px;
-		display: flex;
-		flex-direction: column;
+		border: solid 3px #fff;
+		border-radius: 5px;
+		width: fit-content;
 		img.talkIcon {
 			position: absolute;
 			border-radius: 50%;
-			height: 32px;
+			height: 30px;
+			border: 2px solid #fff;
 			user-select: none;
-			top: 0;
+		}
+		&.reply {
+			margin-left: 35px;
+			img.talkIcon {
+				left: -60px;
+				bottom: -10px;
+				transform: scaleX(-1);
+			}
+		}
+		&.me {
+			margin-left: auto;
+			margin-right: 35px;
+			img.talkIcon {
+				right: -60px;
+				bottom: -10px;
+			}
 		}
 		.talkText {
-			padding: 4px 16px 2px;
-			background-color: #fff6;
-			border: solid 3px #fff;
-			border-radius: 5px;
-			width: fit-content;
 			font-size: 1.3em;
 			line-height: 1.3em;
 			text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
@@ -61,35 +75,9 @@ body {
 			white-space: pre-wrap;
 			word-wrap: break-word;
 		}
-		.talkImage {
-			max-width: 100%;
-			height: 300px;
-			max-height: 300px;
-			margin-bottom: 15px;
-		}
-		&.reply {
-			margin-left: 24px;
-			align-items: flex-start;
-			img.talkIcon {
-				left: -48px;
-				transform: scaleX(-1);
-			}
-		}
-		&.me {
-			align-items: flex-end;
-			margin-right: 24px;
-			img.talkIcon {
-				right: -48px;
-			}
-		}
 	}
 }
-.isLoading {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-}
+
 .sendForm {
 	z-index: 99;
 	position: fixed;
@@ -106,7 +94,6 @@ body {
 		label.imageLabel {
 			padding-right: 4px;
 			margin-right: 4px;
-			display: block;
 			cursor: pointer;
 			input[type="file"] {
 				display: none;
@@ -142,7 +129,6 @@ body {
 			color: #fff;
 			max-width: 100px;
 			white-space: nowrap;
-			padding-right: 5px;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			button {

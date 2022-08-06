@@ -6,7 +6,12 @@ import { ChatRoom } from "./components/ChatRoom";
 
 function App() {
 	const [user] = useAuthState(auth);
-	return <div className="App">{!user ? <SignIn /> : <ChatRoom />}</div>;
+	// return <div className="App">{!user ? <SignIn /> : <ChatRoom />}</div>;
+	return (
+		<div className="App">
+			<ChatRoom />
+		</div>
+	);
 }
 
 export default App;
