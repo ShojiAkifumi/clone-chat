@@ -1,160 +1,229 @@
 body {
-	background-color: #93aad4;
-	background: url("../public/fujisan.jpg") no-repeat center center;
-	background-attachment: fixed;
-	background-size: cover;
-	margin: 0;
-	height: 100vh;
-	padding: 0;
-	font-family: "Kosugi Maru", sans-serif;
-	scrollbar-width: none;
-	&::-webkit-scrollbar {
-		display: none;
-	}
+  background-color: #93aad4;
+  background: url("../public/fujisan.jpg") no-repeat center center;
+  background-attachment: fixed;
+  background-size: cover;
+  margin: 0;
+  height: 100vh;
+  padding: 0;
+  font-family: "Kosugi Maru", sans-serif;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 .header {
-	background-color: #93aad4aa;
-	color: white;
-	width: 100%;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 99;
+  background-color: #93aad4aa;
+  color: white;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
 }
 .headerContainer {
-	padding: 0 15px;
-	max-width: 768px;
-	margin: 0 auto;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+  padding: 0 15px;
+  max-width: 768px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+
+@keyframes repley-talk {
+  0% {
+    transform: scale(0);
+    transform-origin: left bottom;
+  }
+  100% {
+    transform: scale(1);
+    transform-origin: left bottom;
+  }
+}
+@keyframes repley-img {
+  0% {
+    transform: scale(0);
+    transform-origin: bottom;
+  }
+  80% {
+    transform: scale(1.1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scale(1);
+    transform-origin: bottom;
+  }
+}
+@keyframes me-talk {
+  0% {
+    transform: scale(0);
+    transform-origin: right bottom;
+  }
+  100% {
+    transform: scale(1);
+    transform-origin: right bottom;
+  }
+}
+@keyframes me-img {
+  0% {
+    transform: scale(0);
+    transform-origin: bottom;
+  }
+  50% {
+    transform: scale(1.1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scale(1);
+    transform-origin: bottom;
+  }
+}
+
 .messagesContainer {
-	margin: 0 auto;
-	max-width: 768px;
-	padding: 120px 40px;
-	display: flex;
-	flex-direction: column;
-	.talk {
-		position: relative;
-		margin-bottom: 32px;
-		display: flex;
-		flex-direction: column;
-		img.talkIcon {
-			position: absolute;
-			border-radius: 50%;
-			height: 32px;
-			user-select: none;
-			top: 0;
-		}
-		.talkText {
-			padding: 4px 16px 2px;
-			background-color: #fff6;
-			border: solid 3px #fff;
-			border-radius: 5px;
-			width: fit-content;
-			font-size: 1.3em;
-			line-height: 1.3em;
-			text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
-				1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
-				1px 0 0 #fff;
-			white-space: pre-wrap;
-			word-wrap: break-word;
-		}
-		.talkImage {
-			max-width: 100%;
-			height: 300px;
-			max-height: 300px;
-			margin-bottom: 15px;
-		}
-		&.reply {
-			margin-left: 24px;
-			align-items: flex-start;
-			img.talkIcon {
-				left: -48px;
-				transform: scaleX(-1);
-			}
-		}
-		&.me {
-			align-items: flex-end;
-			margin-right: 24px;
-			img.talkIcon {
-				right: -48px;
-			}
-		}
-	}
+  margin: 0 auto;
+  max-width: 768px;
+  padding: 100px 40px 85px;
+  display: flex;
+  flex-direction: column;
+  .talk {
+    position: relative;
+    margin-bottom: 32px;
+    flex-direction: column;
+    display: none;
+    &.loaded {
+      display: flex;
+    }
+    img.talkIcon {
+      position: absolute;
+      border-radius: 50%;
+      height: 32px;
+      user-select: none;
+      bottom: 0;
+    }
+    .talkText {
+      padding: 4px 16px 2px;
+      background-color: #fff6;
+      border: solid 3px #fff;
+      border-radius: 5px;
+      width: fit-content;
+      font-size: 1.3em;
+      line-height: 1.3em;
+      text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
+        1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
+        1px 0 0 #fff;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .talkImage {
+      max-width: 100%;
+      height: 300px;
+      max-height: 300px;
+      margin-bottom: 15px;
+    }
+    &.reply {
+      margin-left: 24px;
+      align-items: flex-start;
+      img.talkIcon {
+        left: -48px;
+        transform: scaleX(-1);
+      }
+      &.new {
+        img.talkIcon {
+          animation: repley-img 0.2s;
+        }
+        .talkText {
+          animation: repley-talk 0.1s;
+        }
+      }
+    }
+    &.me {
+      align-items: flex-end;
+      margin-right: 24px;
+      img.talkIcon {
+        right: -48px;
+      }
+      &.new {
+        img.talkIcon {
+          animation: me-img 0.5s;
+        }
+        .talkText {
+          animation: me-talk 0.4s;
+        }
+      }
+    }
+  }
 }
 .isLoading {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 .sendForm {
-	z-index: 99;
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	background: linear-gradient(#aaa, #666);
-	.formContainer {
-		margin: 0 auto;
-		max-width: 768px;
-		padding: 15px 15px;
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-end;
-		label.imageLabel {
-			padding-right: 4px;
-			margin-right: 4px;
-			display: block;
-			cursor: pointer;
-			input[type="file"] {
-				display: none;
-			}
-		}
-		.textArea {
-			line-height: 1.4em;
-			font-size: 1.2em;
-			width: calc(100% - 10px);
-			border: none;
-			padding: 5px;
-			background-color: #fafafa;
-			border-radius: 3px;
-			font-family: "Kosugi Maru", sans-serif;
-			resize: none;
-			margin: 0 5px;
-			&:focus {
-				outline: none;
-			}
-			&::placeholder {
-				color: #ccc;
-				font-size: 0.8em;
-			}
-		}
-		.sendBtn {
-			background: none;
-			border: none;
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-		}
-		.imageName {
-			color: #fff;
-			max-width: 100px;
-			white-space: nowrap;
-			padding-right: 5px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			button {
-				background: none;
-				border: none;
-				padding: 0;
-				cursor: pointer;
-				svg {
-					max-height: 18px;
-					max-width: 18px;
-				}
-			}
-		}
-	}
+  z-index: 99;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(#aaa, #666);
+  .formContainer {
+    margin: 0 auto;
+    max-width: 768px;
+    padding: 15px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    label.imageLabel {
+      padding-right: 4px;
+      margin-right: 4px;
+      display: block;
+      cursor: pointer;
+      input[type="file"] {
+        display: none;
+      }
+    }
+    .textArea {
+      line-height: 1.4em;
+      font-size: 1.2em;
+      width: calc(100% - 10px);
+      border: none;
+      padding: 5px;
+      background-color: #fafafa;
+      border-radius: 3px;
+      font-family: "Kosugi Maru", sans-serif;
+      resize: none;
+      margin: 0 5px;
+      &:focus {
+        outline: none;
+      }
+      &::placeholder {
+        color: #ccc;
+        font-size: 0.8em;
+      }
+    }
+    .sendBtn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .imageName {
+      color: #fff;
+      max-width: 100px;
+      white-space: nowrap;
+      padding-right: 5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      button {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        svg {
+          max-height: 18px;
+          max-width: 18px;
+        }
+      }
+    }
+  }
 }
