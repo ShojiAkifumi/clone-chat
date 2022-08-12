@@ -1,13 +1,34 @@
+import { useState, useContext } from "react";
 import useMessages from "./useMessages";
 import useScrollEffect from "./useScrollEffect";
+import { userContext } from "../../../App";
+import { signOut } from "firebase/auth";
+
+const UserModal = () => {
+  const auth = useContext(userContext);
+  return (
+    <div>
+      <button onClick={() => signOut(auth)}>ログアウト</button>
+    </div>
+  );
+};
+const FriendModal = () => {
+  return <div>相手の情報</div>;
+};
 const Messages = ({ scroll }) => {
   const [snapshot, loading, error] = useMessages();
+  const [userModalOpen, setUserModalOpen] = useState(false);
+  const [friendModalOpen, setFriendModalOpen] = useState(false);
 
   useScrollEffect(scroll, snapshot);
 
   error && console.log(error);
 
-  const LoginId = "1";
+  const auth = useContext(userContext);
+  let LoginId = "";
+  if (auth.currentUser) {
+    LoginId = auth.currentUser.uid;
+  }
 
   return (
     <div>
@@ -32,6 +53,11 @@ const Messages = ({ scroll }) => {
                     src={message.photoUrl}
                     alt={message.uid}
                     className="talkIcon"
+                    onClick={
+                      message.uid === LoginId
+                        ? () => setUserModalOpen(true)
+                        : () => setFriendModalOpen(true)
+                    }
                   />
                   {message.imageName && (
                     <img
@@ -47,6 +73,8 @@ const Messages = ({ scroll }) => {
                 </div>
               );
             })}
+          {userModalOpen && <UserModal />}
+          {friendModalOpen && <FriendModal />}
         </div>
       )}
     </div>
