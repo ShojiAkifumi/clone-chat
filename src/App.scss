@@ -266,3 +266,49 @@ body {
     }
   }
 }
+.modal-overlay {
+  background-color: #3338;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  cursor: pointer;
+  .modal-content {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 100px 15px;
+    width: min(600px, 90%);
+    position: relative;
+    cursor: default;
+    .modal-close-btn {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      cursor: pointer;
+    }
+  }
+}
+.logout-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    background-color: #0fafaa;
+    color: white;
+    font-size: 16px;
+    border: none;
+    font-weight: bolder;
+    padding: 10px 25px;
+    border-radius: 5px;
+    transition: 0.2s;
+    cursor: pointer;
+    &:hover {
+      background-color: #128e8a;
+    }
+  }
+}

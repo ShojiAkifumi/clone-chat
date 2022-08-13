@@ -3,22 +3,11 @@ import useMessages from "./useMessages";
 import useScrollEffect from "./useScrollEffect";
 import { userContext } from "../../../App";
 import { signOut } from "firebase/auth";
+import Modal from "../Modal";
 
-const UserModal = () => {
-  const auth = useContext(userContext);
-  return (
-    <div>
-      <button onClick={() => signOut(auth)}>ログアウト</button>
-    </div>
-  );
-};
-const FriendModal = () => {
-  return <div>相手の情報</div>;
-};
 const Messages = ({ scroll }) => {
   const [snapshot, loading, error] = useMessages();
   const [userModalOpen, setUserModalOpen] = useState(false);
-  const [friendModalOpen, setFriendModalOpen] = useState(false);
 
   useScrollEffect(scroll, snapshot);
 
@@ -56,7 +45,7 @@ const Messages = ({ scroll }) => {
                     onClick={
                       message.uid === LoginId
                         ? () => setUserModalOpen(true)
-                        : () => setFriendModalOpen(true)
+                        : ""
                     }
                   />
                   {message.imageName && (
@@ -73,8 +62,13 @@ const Messages = ({ scroll }) => {
                 </div>
               );
             })}
-          {userModalOpen && <UserModal />}
-          {friendModalOpen && <FriendModal />}
+          {userModalOpen && (
+            <Modal closeModal={() => setUserModalOpen(false)}>
+              <div className="logout-btn">
+                <button onClick={() => signOut(auth)}>ログアウト</button>
+              </div>
+            </Modal>
+          )}
         </div>
       )}
     </div>
