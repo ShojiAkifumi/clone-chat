@@ -14,7 +14,7 @@ const ExMessges = ({ setMessage, setOpenExMessage }) => {
     <div className="ex-messages">
       <div className="ex-messages-inner">
         {messages.map((message, index) => (
-          <p onClick={() => setMessage(message)} key={index}>
+          <p onClick={() => setMessage((text) => text + message)} key={index}>
             {message}
           </p>
         ))}

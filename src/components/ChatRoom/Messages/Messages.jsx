@@ -4,6 +4,7 @@ import useScrollEffect from "./useScrollEffect";
 import { userContext } from "../../../App";
 import { signOut } from "firebase/auth";
 import Modal from "../Modal";
+import { BsArrowClockwise } from "react-icons/bs";
 
 const Messages = ({ scroll }) => {
   const [snapshot, loading, error] = useMessages();
@@ -22,7 +23,9 @@ const Messages = ({ scroll }) => {
   return (
     <div>
       {loading ? (
-        <div className="isLoading">ロード中</div>
+        <div className="isLoading">
+          <BsArrowClockwise size="4em" />
+        </div>
       ) : (
         <div className="messagesContainer">
           {snapshot &&

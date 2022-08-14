@@ -7,18 +7,20 @@ import useChangeTextArea from "./useChangeTextArea";
 import { userContext } from "../../../App";
 import sendData from "./sendData";
 import ExMessges from "./ExMessges";
+import { BsArrowClockwise } from "react-icons/bs";
 
 const FormField = () => {
   const [message, setMessage] = useState("");
   const [imageData, setImageData] = useState(null);
   const [openMedia, setOpenMedia] = useState(false);
+  const [isUploading, setIsUpLoading] = useState(false);
   const [openExMessage, setOpenExMessage] = useState(false);
   const auth = useContext(userContext);
 
   const submitData = (e) => {
     e.preventDefault();
     if (message) {
-      sendData(message, imageData, auth.currentUser);
+      sendData(message, imageData, auth.currentUser, setIsUpLoading);
       setMessage("");
       setImageData(null);
       setOpenExMessage(false);
@@ -26,48 +28,55 @@ const FormField = () => {
   };
 
   return (
-    <div className="sendForm">
-      <form onSubmit={submitData}>
-        <div className="formContainer">
-          <IconContext.Provider value={{ color: "#fff", size: "36px" }}>
-            {openMedia ? (
-              <UploadImageFile
-                imageData={imageData}
-                setImageData={setImageData}
-                setOpenMedia={setOpenMedia}
-              />
-            ) : (
-              <MdArrowForwardIos
-                onClick={() => setOpenMedia(true)}
-                className="arrow-btn"
-              />
-            )}
-            <TextArea
-              message={message}
-              changeTextArea={useChangeTextArea(setMessage)}
-            />
-            {message ? (
-              <button className="sendBtn">
-                <MdSend />
-              </button>
-            ) : (
-              <>
-                <MdOutlineMoreHoriz
-                  className="more-horiz-btn"
-                  onClick={() => setOpenExMessage(true)}
-                />
-              </>
-            )}
-          </IconContext.Provider>
+    <>
+      {isUploading && (
+        <div className="isLoading">
+          <BsArrowClockwise size="4em" />
         </div>
-      </form>
-      {openExMessage && (
-        <ExMessges
-          setMessage={setMessage}
-          setOpenExMessage={setOpenExMessage}
-        />
       )}
-    </div>
+      <div className="sendForm">
+        <form onSubmit={submitData}>
+          <div className="formContainer">
+            <IconContext.Provider value={{ color: "#fff", size: "36px" }}>
+              {openMedia ? (
+                <UploadImageFile
+                  imageData={imageData}
+                  setImageData={setImageData}
+                  setOpenMedia={setOpenMedia}
+                />
+              ) : (
+                <MdArrowForwardIos
+                  onClick={() => setOpenMedia(true)}
+                  className="arrow-btn"
+                />
+              )}
+              <TextArea
+                message={message}
+                changeTextArea={useChangeTextArea(setMessage)}
+              />
+              {message ? (
+                <button className="sendBtn">
+                  <MdSend />
+                </button>
+              ) : (
+                <>
+                  <MdOutlineMoreHoriz
+                    className="more-horiz-btn"
+                    onClick={() => setOpenExMessage(true)}
+                  />
+                </>
+              )}
+            </IconContext.Provider>
+          </div>
+        </form>
+        {openExMessage && (
+          <ExMessges
+            setMessage={setMessage}
+            setOpenExMessage={setOpenExMessage}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

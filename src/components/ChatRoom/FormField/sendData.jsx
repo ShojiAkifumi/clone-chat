@@ -13,14 +13,17 @@ const sendMessage = (message, imageData, user) => {
   addDoc(collection(db, "messages"), Data);
 };
 
-const sendImage = async (imageData) => {
-  const imagesRef = ref(storage, `images/${imageData.name}`);
-  uploadBytes(imagesRef, imageData.data);
-};
-
-const sendData = (message = "", imageData = "", user) => {
-  sendMessage(message, imageData, user);
-  imageData && sendImage(imageData);
+const sendData = (message = "", imageData = "", user, setIsUpLoading) => {
+  if (imageData) {
+    const imagesRef = ref(storage, `images/${imageData.name}`);
+    setIsUpLoading(true);
+    uploadBytes(imagesRef, imageData.data).then(() => {
+      sendMessage(message, imageData, user);
+      setIsUpLoading(false);
+    });
+  } else {
+    sendMessage(message, imageData, user);
+  }
 };
 
 export default sendData;
