@@ -48,7 +48,7 @@ const Messages = ({ scroll }) => {
                     onClick={
                       message.uid === LoginId
                         ? () => setUserModalOpen(true)
-                        : ""
+                        : undefined
                     }
                   />
                   {message.imageName && (
