@@ -2,10 +2,6 @@
   box-sizing: border-box;
 }
 body {
-  background-color: #1f5770;
-  // background: url("../public/fujisan.jpg") no-repeat center center;
-  // background-attachment: fixed;
-  // background-size: cover;
   margin: 0;
   height: 100vh;
   padding: 0;
@@ -15,7 +11,18 @@ body {
     display: none;
   }
 }
-
+.back-ground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #1f5770;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+}
 @keyframes avatar-animation {
   0% {
     transform: scale(0);
@@ -99,6 +106,7 @@ body {
       opacity: 0.9;
       border-radius: 5px;
       border: solid 3px #fff;
+      cursor: pointer;
     }
     &.new {
       img.talkIcon {

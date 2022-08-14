@@ -1,10 +1,16 @@
 import { useState, useContext } from "react";
 import useMessages from "./useMessages";
 import useScrollEffect from "./useScrollEffect";
-import { userContext } from "../../../App";
+import { backImageContext, userContext } from "../../../App";
 import { signOut } from "firebase/auth";
 import Modal from "../Modal";
 import { BsArrowClockwise } from "react-icons/bs";
+
+const setChatBg = (imgName, bgContext) => {
+  bgContext.setBgUrl(
+    `url(https://firebasestorage.googleapis.com/v0/b/clone-chat-app-d93d3.appspot.com/o/images%2F${imgName}?alt=media&token=5e85100c-9318-4c49-a332-fd1594c8a099`
+  );
+};
 
 const Messages = ({ scroll }) => {
   const [snapshot, loading, error] = useMessages();
@@ -15,6 +21,7 @@ const Messages = ({ scroll }) => {
   error && console.log(error);
 
   const auth = useContext(userContext);
+  const bgContext = useContext(backImageContext);
   let LoginId = "";
   if (auth.currentUser) {
     LoginId = auth.currentUser.uid;
@@ -57,6 +64,7 @@ const Messages = ({ scroll }) => {
                       alt={message.imageName}
                       className="talkImage"
                       height="300"
+                      onClick={() => setChatBg(message.imageName, bgContext)}
                     />
                   )}
                   {message.text && (

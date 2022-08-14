@@ -5,17 +5,23 @@ import ChatRoom from "./components/ChatRoom/ChatRoom";
 import SignIn from "./components/SignIn/SignIn";
 import FormField from "./components/ChatRoom/FormField/FormField";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useState } from "react";
 
 export const userContext = createContext("");
+export const backImageContext = createContext("");
 
 function App() {
   const [user] = useAuthState(auth);
+  const [bgUrl, setBgUrl] = useState("none");
+
   return (
     <userContext.Provider value={auth}>
-      <div className="App">
-        <ChatRoom />
-        {user ? <FormField /> : <SignIn />}
-      </div>
+      <backImageContext.Provider value={{ bgUrl, setBgUrl }}>
+        <div className="App">
+          <ChatRoom />
+          {user ? <FormField /> : <SignIn />}
+        </div>
+      </backImageContext.Provider>
     </userContext.Provider>
   );
 }
