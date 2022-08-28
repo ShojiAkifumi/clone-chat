@@ -8,17 +8,12 @@ import { BsArrowClockwise } from "react-icons/bs";
 
 const setChatBg = (imgName, bgContext) => {
   bgContext.setBgUrl(
-    `url(https://firebasestorage.googleapis.com/v0/b/clone-chat-app-d93d3.appspot.com/o/images%2F${imgName}?alt=media&token=5e85100c-9318-4c49-a332-fd1594c8a099`
+    `url(https://firebasestorage.googleapis.com/v0/b/clone-chat-app-d93d3.appspot.com/o/images%2F${imgName}?alt=media&token=5e85100c-9318-4c49-a332-fd1594c8a099)`
   );
 };
 
 const Messages = ({ scroll }) => {
-  const [snapshot, loading, error] = useMessages();
   const [userModalOpen, setUserModalOpen] = useState(false);
-
-  useScrollEffect(scroll, snapshot);
-
-  error && console.log(error);
 
   const auth = useContext(userContext);
   const bgContext = useContext(backImageContext);
@@ -26,6 +21,9 @@ const Messages = ({ scroll }) => {
   if (auth.currentUser) {
     LoginId = auth.currentUser.uid;
   }
+  const [snapshot, loading, error] = useMessages();
+  error && console.log(error);
+  useScrollEffect(scroll, snapshot);
 
   return (
     <div>
@@ -63,7 +61,8 @@ const Messages = ({ scroll }) => {
                       src={imageUrl}
                       alt={message.imageName}
                       className="talkImage"
-                      height="300"
+                      height="500"
+                      width={message.imageRatio * 500}
                       onClick={() => setChatBg(message.imageName, bgContext)}
                     />
                   )}

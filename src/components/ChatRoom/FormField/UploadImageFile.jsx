@@ -27,7 +27,17 @@ const UploadImageFile = ({ imageData, setImageData, setOpenMedia }) => {
     if (file !== undefined) {
       if (/image.*/.exec(file.type)) {
         await resizeFile(file).then((resizefiles) => {
-          setImageData({ name: file.name, data: resizefiles });
+          let image = new Image(),
+            blobURL = URL.createObjectURL(resizefiles);
+          image.src = blobURL;
+          image.onload = function () {
+            setImageData({
+              name: file.name,
+              data: resizefiles,
+              ratio: image.width / image.height,
+              localUrl: blobURL,
+            });
+          };
         });
       } else {
         window.alert("画像のみアップロードできます");

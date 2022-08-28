@@ -8,15 +8,23 @@ const sendMessage = (message, imageData, user) => {
     photoUrl: user.photoURL,
     text: message,
     imageName: imageData ? imageData.name : "",
+    imageRatio: imageData ? imageData.ratio : "",
     createdAt: serverTimestamp(),
   };
   addDoc(collection(db, "messages"), Data);
 };
 
-const sendData = (message = "", imageData = "", user, setIsUpLoading) => {
+const sendData = (
+  message = "",
+  imageData = "",
+  user,
+  setIsUpLoading,
+  setBgUrl
+) => {
   if (imageData) {
-    const imagesRef = ref(storage, `images/${imageData.name}`);
     setIsUpLoading(true);
+    setBgUrl(`url(${imageData.localUrl})`);
+    const imagesRef = ref(storage, `images/${imageData.name}`);
     uploadBytes(imagesRef, imageData.data).then(() => {
       sendMessage(message, imageData, user);
       setIsUpLoading(false);
