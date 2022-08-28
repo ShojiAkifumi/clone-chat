@@ -20,15 +20,22 @@ const Messages = ({ scroll }) => {
 
   const hasImageRefs = useRef([]);
 
+  const messagesContainerRef = useRef(null);
+
   const toggleVisibility = () => {
-    const bgViewHeight = window.innerHeight + window.scrollY - 150;
-    hasImageRefs.current.forEach((hasImageRef) => {
-      if (bgViewHeight < hasImageRef.current.offsetTop) {
-        hasImageRef.current.classList.add("hidden");
-      } else {
-        hasImageRef.current.classList.remove("hidden");
-      }
-    });
+    if (
+      messagesContainerRef.current.offsetHeight - window.innerHeight - 80 >
+      window.scrollY
+    ) {
+      const bgViewHeight = window.innerHeight + window.scrollY - 150;
+      hasImageRefs.current.forEach((hasImageRef) => {
+        if (bgViewHeight < hasImageRef.current.offsetTop) {
+          hasImageRef.current.classList.add("hidden");
+        } else {
+          hasImageRef.current.classList.remove("hidden");
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -43,7 +50,7 @@ const Messages = ({ scroll }) => {
           <BsArrowClockwise size="4em" />
         </div>
       ) : (
-        <div className="messagesContainer">
+        <div className="messagesContainer" ref={messagesContainerRef}>
           {snapshot &&
             snapshot.docs.map((s, index) => {
               const message = s.data();
