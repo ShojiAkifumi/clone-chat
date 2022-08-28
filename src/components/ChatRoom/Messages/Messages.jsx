@@ -1,22 +1,15 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, createRef, useContext, useRef } from "react";
 import useMessages from "./useMessages";
 import useScrollEffect from "./useScrollEffect";
-import { backImageContext, userContext } from "../../../App";
+import { userContext } from "../../../App";
 import { signOut } from "firebase/auth";
 import Modal from "../Modal";
 import { BsArrowClockwise } from "react-icons/bs";
-
-const setChatBg = (imgName, bgContext) => {
-  bgContext.setBgUrl(
-    `url(https://firebasestorage.googleapis.com/v0/b/clone-chat-app-d93d3.appspot.com/o/images%2F${imgName}?alt=media&token=5e85100c-9318-4c49-a332-fd1594c8a099)`
-  );
-};
 
 const Messages = ({ scroll }) => {
   const [userModalOpen, setUserModalOpen] = useState(false);
 
   const auth = useContext(userContext);
-  const bgContext = useContext(backImageContext);
   let LoginId = "";
   if (auth.currentUser) {
     LoginId = auth.currentUser.uid;
@@ -24,6 +17,24 @@ const Messages = ({ scroll }) => {
   const [snapshot, loading, error] = useMessages();
   error && console.log(error);
   useScrollEffect(scroll, snapshot);
+
+  const hasImageRefs = useRef([]);
+
+  const toggleVisibility = () => {
+    const bgViewHeight = window.innerHeight + window.scrollY - 150;
+    hasImageRefs.current.forEach((hasImageRef) => {
+      if (bgViewHeight < hasImageRef.current.offsetTop) {
+        hasImageRef.current.classList.add("hidden");
+      } else {
+        hasImageRef.current.classList.remove("hidden");
+      }
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", toggleVisibility);
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
 
   return (
     <div>
@@ -34,12 +45,17 @@ const Messages = ({ scroll }) => {
       ) : (
         <div className="messagesContainer">
           {snapshot &&
-            snapshot.docs.map((s) => {
+            snapshot.docs.map((s, index) => {
               const message = s.data();
-              const imageUrl = `https://firebasestorage.googleapis.com/v0/b/clone-chat-app-d93d3.appspot.com/o/images%2F${message.imageName}?alt=media&token=5e85100c-9318-4c49-a332-fd1594c8a099`;
+              let imageUrl = "";
+              if (message.imageName) {
+                imageUrl = `https://firebasestorage.googleapis.com/v0/b/clone-chat-app-d93d3.appspot.com/o/images%2F${message.imageName}?alt=media&token=5e85100c-9318-4c49-a332-fd1594c8a099`;
+                hasImageRefs.current[index] = createRef();
+              }
               return (
                 <div
                   key={s.id}
+                  ref={message.imageName ? hasImageRefs.current[index] : null}
                   className={`talk ${
                     message.uid === LoginId ? "me" : "reply"
                   } ${message.createdAt && "loaded"} ${
@@ -50,6 +66,8 @@ const Messages = ({ scroll }) => {
                     src={message.photoUrl}
                     alt={message.uid}
                     className="talkIcon"
+                    width="38"
+                    height="38"
                     onClick={
                       message.uid === LoginId
                         ? () => setUserModalOpen(true)
@@ -57,14 +75,20 @@ const Messages = ({ scroll }) => {
                     }
                   />
                   {message.imageName && (
-                    <img
-                      src={imageUrl}
-                      alt={message.imageName}
-                      className="talkImage"
-                      height="500"
-                      width={message.imageRatio * 500}
-                      onClick={() => setChatBg(message.imageName, bgContext)}
-                    />
+                    <>
+                      <div
+                        className={`back-ground`}
+                        style={{ backgroundImage: `url(${imageUrl})` }}
+                      ></div>
+                      <img
+                        src={imageUrl}
+                        alt={message.imageName}
+                        className="talkImage"
+                        height="250"
+                        width={message.imageRatio * 250}
+                        loading="lazy"
+                      />
+                    </>
                   )}
                   {message.text && (
                     <span className="talkText">{message.text}</span>

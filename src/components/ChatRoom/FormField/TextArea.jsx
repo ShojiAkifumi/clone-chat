@@ -14,6 +14,7 @@ const TextArea = ({ message, changeTextArea }) => {
       className="textArea"
       rows="1"
       placeholder="メッセージを入力"
+      wrap="off"
       ref={textareaRef}
     ></textarea>
   );

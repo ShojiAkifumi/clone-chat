@@ -14,16 +14,9 @@ const sendMessage = (message, imageData, user) => {
   addDoc(collection(db, "messages"), Data);
 };
 
-const sendData = (
-  message = "",
-  imageData = "",
-  user,
-  setIsUpLoading,
-  setBgUrl
-) => {
+const sendData = (message = "", imageData = "", user, setIsUpLoading) => {
   if (imageData) {
     setIsUpLoading(true);
-    setBgUrl(`url(${imageData.localUrl})`);
     const imagesRef = ref(storage, `images/${imageData.name}`);
     uploadBytes(imagesRef, imageData.data).then(() => {
       sendMessage(message, imageData, user);

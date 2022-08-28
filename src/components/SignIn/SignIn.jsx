@@ -8,7 +8,7 @@ const SignIn = () => {
   return (
     <div className="singin-btn">
       <button onClick={() => signInWithPopup(auth, provider)}>
-        ログイン・サインアップする
+        サインイン
       </button>
     </div>
   );

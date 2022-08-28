@@ -5,23 +5,12 @@ body {
   margin: 0;
   height: 100vh;
   padding: 0;
+  background-color: #1f5770;
   font-family: "Kosugi Maru", sans-serif;
   scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
   }
-}
-.back-ground {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #1f5770;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
-  background-size: cover;
 }
 @keyframes avatar-animation {
   0% {
@@ -59,15 +48,24 @@ body {
   }
 }
 
+@keyframes img-animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .messagesContainer {
   margin: 0 auto;
   max-width: 768px;
-  padding: 100px 40px 85px;
+  padding: 500px 40px 85px;
   display: flex;
   flex-direction: column;
   .talk {
     position: relative;
-    margin-bottom: 32px;
+    margin-bottom: 40px;
     flex-direction: column;
     display: flex;
     opacity: 0;
@@ -77,12 +75,11 @@ body {
     img.talkIcon {
       position: absolute;
       border-radius: 50%;
-      height: 42px;
       user-select: none;
+      background-color: #1f5770;
       bottom: 0;
       opacity: 0.9;
       cursor: pointer;
-      filter: drop-shadow(0px 0px 2px #fff);
     }
     .talkText {
       padding: 4px 16px 2px;
@@ -99,40 +96,81 @@ body {
       word-wrap: break-word;
     }
     .talkImage {
-      max-width: 80%;
+      max-width: 72%;
       height: auto;
       margin-bottom: 15px;
       border-radius: 5px;
+      background-color: #1f5770;
       border: solid 3px #fff;
       cursor: pointer;
     }
+    .back-ground {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: calc(100vh - 68px);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      opacity: 1;
+      transition: all 0.4s ease 0s;
+      z-index: -1;
+    }
     &.new {
+      .talkText,
+      .talkImage,
       img.talkIcon {
-        animation: avatar-animation 0.15s;
+        transform: scale(0);
+      }
+      img.talkIcon {
+        animation: avatar-animation 0.3s;
+        animation-delay: 0.6s;
+        animation-fill-mode: forwards;
+      }
+      .back-ground {
+        animation: img-animation 0.3s;
+        animation-fill-mode: forwards;
       }
     }
+    &.hidden .back-ground {
+      opacity: 0 !important;
+    }
     &.reply {
-      margin-left: 60px;
+      margin-left: 20px;
       align-items: flex-start;
       img.talkIcon {
-        left: -70px;
-        transform: scaleX(-1);
+        left: -50px;
+        transform: rotateY(180deg);
       }
       &.new {
-        .talkText {
-          animation: repley-animation 0.1s;
+        .talkText,
+        .talkImage {
+          transform: scale(0);
+          animation: repley-animation 0.2s;
+          animation-delay: 0.6s;
+          animation-fill-mode: forwards;
+        }
+        img.talkIcon {
+          transform: scale(0) rotateY(180deg);
         }
       }
     }
     &.me {
       align-items: flex-end;
-      margin-right: 60px;
+      margin-right: 20px;
       img.talkIcon {
-        right: -70px;
+        right: -50px;
       }
       &.new {
-        .talkText {
+        .talkText,
+        .talkImage {
           animation: me-animation 0.2s;
+          animation-delay: 0.6s;
+          animation-fill-mode: forwards;
+        }
+        img.talkIcon {
+          transform: scale(0);
         }
       }
     }
@@ -145,7 +183,7 @@ body {
   }
 }
 .isLoading {
-  background-color: #0006;
+  background-color: #1f577055;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -196,6 +234,10 @@ body {
       font-family: "Kosugi Maru", sans-serif;
       resize: none;
       margin: 0 5px;
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
       &:focus {
         outline: none;
       }
