@@ -11,7 +11,7 @@ const useScrollEffect = (scroll, snapshot) => {
     if (snapshot) {
       renderFlgRef.current = true;
     }
-  }, [snapshot]);
+  }, [scroll, snapshot]);
 };
 
 export default useScrollEffect;
