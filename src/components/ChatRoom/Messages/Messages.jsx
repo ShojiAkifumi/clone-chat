@@ -93,7 +93,6 @@ const Messages = ({ scroll }) => {
                         className="talkImage"
                         height="250"
                         width={message.imageRatio * 250}
-                        loading="lazy"
                       />
                     </>
                   )}
