@@ -73,8 +73,8 @@ const Messages = ({ scroll }) => {
                     src={message.photoUrl}
                     alt={message.uid}
                     className="talkIcon"
-                    width="38"
-                    height="38"
+                    width="34"
+                    height="34"
                     onClick={
                       message.uid === LoginId
                         ? () => setUserModalOpen(true)
