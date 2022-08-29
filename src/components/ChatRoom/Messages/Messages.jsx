@@ -24,10 +24,10 @@ const Messages = ({ scroll }) => {
 
   const toggleVisibility = () => {
     if (
-      messagesContainerRef.current.offsetHeight - window.innerHeight - 80 >
+      messagesContainerRef.current.offsetHeight - window.outerHeight - 80 >
       window.scrollY
     ) {
-      const bgViewHeight = window.innerHeight + window.scrollY - 150;
+      const bgViewHeight = window.outerHeight + window.scrollY - 150;
       hasImageRefs.current.forEach((hasImageRef) => {
         if (bgViewHeight < hasImageRef.current.offsetTop) {
           hasImageRef.current.classList.add("hidden");
