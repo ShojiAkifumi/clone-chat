@@ -5,6 +5,7 @@ import { userContext } from "../../../App";
 import { signOut } from "firebase/auth";
 import Modal from "../Modal";
 import { BsArrowClockwise } from "react-icons/bs";
+import { changeBgEffect } from "./changeBgEffect";
 
 const Messages = ({ scroll }) => {
   const [userModalOpen, setUserModalOpen] = useState(false);
@@ -20,28 +21,19 @@ const Messages = ({ scroll }) => {
 
   const hasImageRefs = useRef([]);
 
-  const messagesContainerRef = useRef(null);
-
-  const toggleVisibility = () => {
-    if (
-      messagesContainerRef.current.offsetHeight - window.outerHeight - 80 >
-      window.scrollY
-    ) {
-      const bgViewHeight = window.outerHeight + window.scrollY - 150;
-      hasImageRefs.current.forEach((hasImageRef) => {
-        if (bgViewHeight < hasImageRef.current.offsetTop) {
-          hasImageRef.current.classList.add("hidden");
-        } else {
-          hasImageRef.current.classList.remove("hidden");
-        }
-      });
-    }
-  };
+  const currentBgNumRef = useRef(null);
 
   useEffect(() => {
-    window.addEventListener("scroll", toggleVisibility);
-    return () => window.removeEventListener("scroll", toggleVisibility);
-  }, []);
+    if (currentBgNumRef.current !== null) {
+      window.addEventListener("scroll", () =>
+        changeBgEffect(hasImageRefs, currentBgNumRef)
+      );
+    }
+    return () =>
+      window.removeEventListener("scroll", () =>
+        changeBgEffect(hasImageRefs, currentBgNumRef)
+      );
+  }, [snapshot]);
 
   return (
     <div>
@@ -50,19 +42,27 @@ const Messages = ({ scroll }) => {
           <BsArrowClockwise size="4em" />
         </div>
       ) : (
-        <div className="messagesContainer" ref={messagesContainerRef}>
+        <div className="messagesContainer">
           {snapshot &&
             snapshot.docs.map((s, index) => {
+              if (index === 0) {
+                hasImageRefs.current = [];
+              }
               const message = s.data();
               let imageUrl = "";
               if (message.imageName) {
                 imageUrl = `https://firebasestorage.googleapis.com/v0/b/clone-chat-app-d93d3.appspot.com/o/images%2F${message.imageName}?alt=media&token=5e85100c-9318-4c49-a332-fd1594c8a099`;
-                hasImageRefs.current[index] = createRef();
+                hasImageRefs.current = [...hasImageRefs.current, createRef()];
+                currentBgNumRef.current = hasImageRefs.current.length - 1;
               }
               return (
                 <div
                   key={s.id}
-                  ref={message.imageName ? hasImageRefs.current[index] : null}
+                  ref={
+                    message.imageName
+                      ? hasImageRefs.current[currentBgNumRef.current]
+                      : null
+                  }
                   className={`talk ${
                     message.uid === LoginId ? "me" : "reply"
                   } ${message.createdAt && "loaded"} ${
