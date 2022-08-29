@@ -63,10 +63,12 @@ const Messages = ({ scroll }) => {
                       ? hasImageRefs.current[currentBgNumRef.current]
                       : null
                   }
-                  className={`talk ${
-                    message.uid === LoginId ? "me" : "reply"
-                  } ${message.createdAt && "loaded"} ${
-                    2 > Date.now() / 1000 - message.createdAt?.seconds && "new"
+                  className={`talk ${message.uid === LoginId ? "me" : "reply"}${
+                    message.createdAt ? " loaded" : ""
+                  }${
+                    2 > Date.now() / 1000 - message.createdAt?.seconds
+                      ? " new"
+                      : ""
                   }`}
                 >
                   <img
