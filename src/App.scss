@@ -9,6 +9,7 @@ body {
   font-family: "Kosugi Maru", sans-serif;
   scrollbar-width: none;
   position: relative;
+  overscroll-behavior-y: none;
   &::-webkit-scrollbar {
     width: 8px;
     top: 0;
@@ -73,7 +74,6 @@ body {
   padding: 500px 40px 85px;
   display: flex;
   flex-direction: column;
-  overscroll-behavior-y: contain;
   .talk {
     position: relative;
     margin-bottom: 40px;
