@@ -71,7 +71,7 @@ body {
 .messagesContainer {
   margin: 0 auto;
   max-width: 768px;
-  padding: 40px 72px 0;
+  padding: 40px 72px 60px;
   display: flex;
   flex-direction: column;
   .talk {
@@ -384,7 +384,4 @@ body {
       background-color: #128e8a;
     }
   }
-}
-.scroll-target {
-  height: 60px;
 }
