@@ -1,7 +1,7 @@
-import { createContext } from "react";
+import { createContext, useRef } from "react";
 import "./App.scss";
 import { auth } from "./firebase";
-import ChatRoom from "./components/ChatRoom/ChatRoom";
+import Messages from "./components/ChatRoom/Messages/Messages";
 import SignIn from "./components/SignIn/SignIn";
 import FormField from "./components/ChatRoom/FormField/FormField";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -10,12 +10,13 @@ export const userContext = createContext("");
 
 function App() {
   const [user] = useAuthState(auth);
-
+  const scroll = useRef();
   return (
     <userContext.Provider value={auth}>
       <div className="App">
-        <ChatRoom />
-        {user ? <FormField /> : <SignIn />}
+        <Messages scroll={scroll} />
+        {user ? <FormField scroll={scroll} /> : <SignIn />}
+        <div ref={scroll}></div>
       </div>
     </userContext.Provider>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const TextArea = ({ message, changeTextArea }) => {
+const TextArea = ({ message, scroll, changeTextArea }) => {
   const textareaRef = useRef(null);
   useEffect(() => {
     const lines = (message + "\n").match(/\n/g).length;
@@ -16,6 +16,7 @@ const TextArea = ({ message, changeTextArea }) => {
       placeholder="メッセージを入力"
       wrap="off"
       ref={textareaRef}
+      onClick={() => scroll.current.scrollIntoView({ block: "end" })}
     ></textarea>
   );
 };

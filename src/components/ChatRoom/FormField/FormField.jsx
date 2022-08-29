@@ -9,7 +9,7 @@ import sendData from "./sendData";
 import ExMessges from "./ExMessges";
 import { BsArrowClockwise } from "react-icons/bs";
 
-const FormField = () => {
+const FormField = ({ scroll }) => {
   const [message, setMessage] = useState("");
   const [imageData, setImageData] = useState(null);
   const [openMedia, setOpenMedia] = useState(false);
@@ -52,6 +52,7 @@ const FormField = () => {
               )}
               <TextArea
                 message={message}
+                scroll={scroll}
                 changeTextArea={useChangeTextArea(setMessage)}
               />
               {message ? (
