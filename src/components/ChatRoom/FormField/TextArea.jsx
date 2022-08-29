@@ -4,7 +4,7 @@ const TextArea = ({ message, changeTextArea }) => {
   const textareaRef = useRef(null);
   useEffect(() => {
     const lines = (message + "\n").match(/\n/g).length;
-    textareaRef.current.style.height = lines * 24 + 10 + "px";
+    textareaRef.current.style.height = lines * 20 + 14 + "px";
   }, [message]);
 
   return (
