@@ -16,7 +16,13 @@ const TextArea = ({ message, scroll, changeTextArea }) => {
       placeholder="メッセージを入力"
       wrap="off"
       ref={textareaRef}
-      onClick={() => scroll.current.scrollIntoView({ block: "end" })}
+      onClick={() =>
+        setTimeout(
+          () =>
+            scroll.current.scrollIntoView({ block: "end", behavior: "smooth" }),
+          500
+        )
+      }
     ></textarea>
   );
 };
