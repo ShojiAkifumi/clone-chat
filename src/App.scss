@@ -54,12 +54,12 @@ body {
 }
 
 @keyframes me-animation {
-  0% {
+  from {
     -webkit-transform: scale(0);
     transform: scale(0);
     transform-origin: right bottom;
   }
-  100% {
+  to {
     -webkit-transform: scale(1);
     transform: scale(1);
     transform-origin: right bottom;
