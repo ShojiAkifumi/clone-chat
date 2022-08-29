@@ -109,7 +109,6 @@ const Messages = ({ scroll }) => {
               </div>
             </Modal>
           )}
-          <div ref={scroll}></div>
         </div>
       )}
     </>
