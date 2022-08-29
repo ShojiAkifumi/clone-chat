@@ -99,6 +99,7 @@ const Messages = ({ scroll }) => {
                   {message.text && (
                     <span className="talkText">{message.text}</span>
                   )}
+                  <div ref={scroll}></div>
                 </div>
               );
             })}
