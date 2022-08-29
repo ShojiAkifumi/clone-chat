@@ -202,6 +202,7 @@ body {
   position: fixed;
   top: 0;
   z-index: 99;
+  padding-bottom: 70px;
   svg {
     animation: loading 1.2s infinite linear;
     color: #fff;
@@ -290,7 +291,7 @@ body {
   .ex-messages {
     position: absolute;
     bottom: 100%;
-    background-color: #fffb;
+    background-color: #fff;
     width: 100%;
     padding: 5px 15px;
     height: 250px;

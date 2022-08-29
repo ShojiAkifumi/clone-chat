@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
 import { userContext } from "../../App";
 
 const SignIn = () => {
@@ -7,7 +7,7 @@ const SignIn = () => {
   const auth = useContext(userContext);
   return (
     <div className="singin-btn">
-      <button onClick={() => signInWithPopup(auth, provider)}>
+      <button onClick={() => signInWithRedirect(auth, provider)}>
         サインイン
       </button>
     </div>
