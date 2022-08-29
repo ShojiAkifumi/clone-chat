@@ -37,7 +37,7 @@ const Messages = ({ scroll }) => {
 
   return (
     <div>
-      {1 ? (
+      {loading ? (
         <div className="isLoading">
           <BsArrowClockwise size="4em" />
         </div>
