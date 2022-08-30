@@ -8,7 +8,6 @@ body {
   background-color: #1f5770;
   font-family: "Kosugi Maru", sans-serif;
   scrollbar-width: none;
-
   position: relative;
   &::-webkit-scrollbar {
     width: 8px;
@@ -59,7 +58,7 @@ body {
     transform: scale(0);
     transform-origin: right bottom;
   }
-  99.9% {
+  100% {
     -webkit-transform: scale(1);
     transform: scale(1);
     transform-origin: right bottom;
