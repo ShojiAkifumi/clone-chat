@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { IconContext } from "react-icons";
 import { MdSend, MdArrowForwardIos, MdOutlineMoreHoriz } from "react-icons/md";
 import TextArea from "./TextArea";
@@ -16,6 +16,7 @@ const FormField = ({ scroll }) => {
   const [isUploading, setIsUpLoading] = useState(false);
   const [openExMessage, setOpenExMessage] = useState(false);
   const auth = useContext(userContext);
+  const textareaRef = useRef(null);
 
   const submitData = (e) => {
     e.preventDefault();
@@ -54,6 +55,7 @@ const FormField = ({ scroll }) => {
                 message={message}
                 scroll={scroll}
                 changeTextArea={useChangeTextArea(setMessage)}
+                textareaRef={textareaRef}
               />
               {message ? (
                 <button className="sendBtn">
@@ -63,7 +65,10 @@ const FormField = ({ scroll }) => {
                 <>
                   <MdOutlineMoreHoriz
                     className="more-horiz-btn"
-                    onClick={() => setOpenExMessage(true)}
+                    onClick={() => {
+                      setOpenExMessage(true);
+                      textareaRef.current.focus();
+                    }}
                   />
                 </>
               )}
@@ -74,6 +79,7 @@ const FormField = ({ scroll }) => {
           <ExMessges
             setMessage={setMessage}
             setOpenExMessage={setOpenExMessage}
+            textareaRef={textareaRef}
           />
         )}
       </div>

@@ -71,18 +71,23 @@ const Messages = ({ scroll }) => {
                       : ""
                   }`}
                 >
-                  <img
-                    src={message.photoUrl}
-                    alt={message.uid}
-                    className="talkIcon"
-                    width="34"
-                    height="34"
-                    onClick={
-                      message.uid === LoginId
-                        ? () => setUserModalOpen(true)
-                        : undefined
-                    }
-                  />
+                  {message.text && (
+                    <div className="talkText">
+                      {message.text}
+                      <img
+                        src={message.photoUrl}
+                        alt={message.uid}
+                        className="talkIcon"
+                        width="36"
+                        height="36"
+                        onClick={
+                          message.uid === LoginId
+                            ? () => setUserModalOpen(true)
+                            : undefined
+                        }
+                      />
+                    </div>
+                  )}
                   {message.imageName && (
                     <>
                       <div
@@ -97,9 +102,6 @@ const Messages = ({ scroll }) => {
                         width={message.imageRatio * 250}
                       />
                     </>
-                  )}
-                  {message.text && (
-                    <span className="talkText">{message.text}</span>
                   )}
                 </div>
               );

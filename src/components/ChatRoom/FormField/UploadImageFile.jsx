@@ -52,13 +52,13 @@ const UploadImageFile = ({ imageData, setImageData, setOpenMedia }) => {
   return (
     <>
       {imageData ? (
-        <div className="imageName">
-          <button onClick={resetImageFile}>
-            <AiOutlineCloseCircle />
-          </button>
+        <div className="image-view">
           <label className="imageLabel">
-            {imageData.name}
+            <img src={imageData.localUrl} alt={imageData.name} height="30" />
             <input type="file" accept="image/*" onChange={onSetImageFile} />
+            <button onClick={resetImageFile}>
+              <AiOutlineCloseCircle />
+            </button>
           </label>
         </div>
       ) : (

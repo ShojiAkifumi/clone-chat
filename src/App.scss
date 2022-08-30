@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   height: 100vh;
@@ -8,7 +9,6 @@ body {
   background-color: #1f5770;
   font-family: "Kosugi Maru", sans-serif;
   scrollbar-width: none;
-  overscroll-behavior-y: none;
   position: relative;
   &::-webkit-scrollbar {
     width: 8px;
@@ -23,31 +23,28 @@ body {
     background-color: #aaa;
   }
 }
+
 @keyframes avatar-animation {
   0% {
-    -webkit-transform: scale(1);
     transform: scale(0);
     transform-origin: bottom;
   }
   80% {
-    -webkit-transform: scale(1.1);
     transform: scale(1.1);
     transform-origin: bottom;
   }
   100% {
-    -webkit-transform: scale(1);
     transform: scale(1);
     transform-origin: bottom;
   }
 }
+
 @keyframes repley-animation {
   0% {
-    -webkit-transform: scale(0);
     transform: scale(0);
     transform-origin: left bottom;
   }
   100% {
-    -webkit-transform: scale(1);
     transform: scale(1);
     transform-origin: left bottom;
   }
@@ -55,12 +52,10 @@ body {
 
 @keyframes me-animation {
   0% {
-    -webkit-transform: scale(0);
     transform: scale(0);
     transform-origin: right bottom;
   }
   100% {
-    -webkit-transform: scale(1);
     transform: scale(1);
     transform-origin: right bottom;
   }
@@ -78,11 +73,10 @@ body {
 .messagesContainer {
   margin: 0 auto;
   max-width: 768px;
-  padding: 40px 72px 60px;
+  padding: 40px 64px 60px;
   display: flex;
   flex-direction: column;
   .talk {
-    position: relative;
     margin-bottom: 40px;
     flex-direction: column;
     display: flex;
@@ -90,18 +84,9 @@ body {
     &.loaded {
       opacity: 1;
     }
-    img.talkIcon {
-      position: absolute;
-      border-radius: 50%;
-      user-select: none;
-      background-color: #1f5770;
-      bottom: 0;
-      opacity: 0.9;
-      cursor: pointer;
-    }
     .talkText {
-      padding: 6px 16px 4px;
-      background-color: #fff7;
+      padding: 4px 16px 3px;
+      background-color: #fff6;
       border: solid 3px #fff;
       border-radius: 5px;
       width: fit-content;
@@ -112,14 +97,41 @@ body {
         1px 0 0 #fff;
       white-space: pre-wrap;
       word-wrap: break-word;
+      word-break: break-all;
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        background: no-repeat 0 / contain url("../public/balloon-parts.svg");
+        height: 27px;
+        width: 90px;
+        bottom: -2px;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        top: -2px;
+        background-color: #fff;
+        width: 3.3px;
+        height: calc(100% - 16px);
+      }
+      img.talkIcon {
+        position: absolute;
+        border-radius: 50%;
+        user-select: none;
+        background-color: #1f5770;
+        bottom: -4px;
+        opacity: 0.9;
+        cursor: pointer;
+      }
     }
     .talkImage {
-      max-width: 72%;
+      max-width: 90%;
       height: auto;
-      margin-bottom: 15px;
-      border-radius: 5px;
+      margin-top: 18px;
+      border-radius: 7px;
       background-color: #1f5770;
-      border: solid 3px #fff;
+      border: solid 2px #fff;
       cursor: pointer;
     }
     .back-ground {
@@ -155,9 +167,20 @@ body {
     }
     &.reply {
       align-items: flex-start;
-      img.talkIcon {
-        left: -60px;
-        transform: rotateY(180deg);
+      .talkText {
+        border-left-color: transparent;
+        margin-left: 18px;
+        &::before {
+          left: -18.3px;
+        }
+        &::after {
+          border-radius: 3px 0;
+          left: -3px;
+        }
+        img.talkIcon {
+          left: -63px;
+          transform: rotateY(180deg);
+        }
       }
       &.new {
         .talkText,
@@ -174,14 +197,26 @@ body {
     }
     &.me {
       align-items: flex-end;
-      img.talkIcon {
-        right: -60px;
+      .talkText {
+        border-right-color: transparent;
+        margin-right: 18px;
+        &::before {
+          right: -18.3px;
+          transform: rotateY(180deg);
+        }
+        &::after {
+          border-radius: 0 3px;
+          right: -3px;
+        }
+        img.talkIcon {
+          right: -63px;
+        }
       }
       &.new {
         .talkText,
         .talkImage {
-          animation-name: me-animation;
-          animation-duration: 0.2s;
+          transform: scale(0);
+          animation: me-animation 0.2s;
           animation-delay: 0.6s;
           animation-fill-mode: forwards;
         }
@@ -192,14 +227,16 @@ body {
     }
   }
 }
+
 @keyframes loading {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }
+
 .isLoading {
-  background-color: #1f5770aa;
+  background-color: #0007;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -214,6 +251,7 @@ body {
     color: #fff;
   }
 }
+
 .sendForm {
   z-index: 3;
   position: fixed;
@@ -223,7 +261,7 @@ body {
   .formContainer {
     margin: 0 auto;
     max-width: 768px;
-    padding: 7px 15px 15px;
+    padding: 9px 15px 13px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -274,15 +312,17 @@ body {
       margin: 1px 9px 1px 10px;
       cursor: pointer;
     }
-
-    .imageName {
+    .image-view {
       color: #fff;
-      max-width: 100px;
-      white-space: nowrap;
-      padding-right: 5px;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      position: relative;
+      img {
+        border: solid 1px #fff;
+      }
       button {
+        position: absolute;
+        right: -3px;
+        top: -10px;
+        z-index: 2;
         background: none;
         border: none;
         padding: 0;
@@ -347,6 +387,7 @@ body {
     }
   }
 }
+
 .modal-overlay {
   background-color: #3338;
   position: fixed;
@@ -374,6 +415,7 @@ body {
     }
   }
 }
+
 .logout-btn {
   display: flex;
   justify-content: center;

@@ -1,11 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
-const TextArea = ({ message, scroll, changeTextArea }) => {
-  const textareaRef = useRef(null);
+const TextArea = ({ message, scroll, changeTextArea, textareaRef }) => {
   useEffect(() => {
     const lines = (message + "\n").match(/\n/g).length;
     textareaRef.current.style.height = lines * 20 + 14 + "px";
-  }, [message]);
+  }, [message, textareaRef]);
 
   return (
     <textarea
@@ -17,7 +16,11 @@ const TextArea = ({ message, scroll, changeTextArea }) => {
       wrap="off"
       ref={textareaRef}
       onClick={() =>
-        setTimeout(() => scroll.current.scrollIntoView({ block: "end" }), 300)
+        setTimeout(
+          () =>
+            scroll.current.scrollIntoView({ block: "end", behavior: "smooth" }),
+          400
+        )
       }
     ></textarea>
   );
