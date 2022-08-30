@@ -15,14 +15,12 @@ const Messages = ({ scroll }) => {
   if (auth.currentUser) {
     LoginId = auth.currentUser.uid;
   }
+
   const [snapshot, loading, error] = useMessages();
   error && console.log(error);
-  useScrollEffect(scroll, snapshot);
 
   const hasImageRefs = useRef([]);
-
   const currentBgNumRef = useRef(null);
-
   useEffect(() => {
     if (currentBgNumRef.current !== null) {
       window.addEventListener("scroll", () =>
@@ -34,6 +32,12 @@ const Messages = ({ scroll }) => {
         changeBgEffect(hasImageRefs, currentBgNumRef)
       );
   }, [snapshot]);
+
+  useScrollEffect(
+    scroll,
+    snapshot,
+    currentBgNumRef.current === hasImageRefs.current.length - 1
+  );
 
   return (
     <>

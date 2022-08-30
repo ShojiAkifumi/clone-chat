@@ -17,10 +17,10 @@ body {
     position: absolute;
   }
   &::-webkit-scrollbar-track {
-    background-color: transparent;
+    background-color: #81ccd9;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #aaa;
+    background-color: #fff;
   }
 }
 
@@ -186,7 +186,7 @@ body {
         .talkText,
         .talkImage {
           transform: scale(0);
-          animation: repley-animation 0.2s;
+          animation: repley-animation 0.25s;
           animation-delay: 0.6s;
           animation-fill-mode: forwards;
         }
@@ -216,7 +216,7 @@ body {
         .talkText,
         .talkImage {
           transform: scale(0);
-          animation: me-animation 0.2s;
+          animation: me-animation 0.25s;
           animation-delay: 0.6s;
           animation-fill-mode: forwards;
         }
