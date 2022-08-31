@@ -3,9 +3,11 @@ import useMessages from "./useMessages";
 import useScrollEffect from "./useScrollEffect";
 import { userContext } from "../../../App";
 import { signOut } from "firebase/auth";
-import Modal from "../Modal";
+import Modal from "../../utility/Modal";
+import Button from "../../utility/Button";
 import { BsArrowClockwise } from "react-icons/bs";
 import { changeBgEffect } from "./changeBgEffect";
+import Text from "./Text";
 
 const Messages = ({ scroll }) => {
   const [userModalOpen, setUserModalOpen] = useState(false);
@@ -77,7 +79,7 @@ const Messages = ({ scroll }) => {
                 >
                   {message.text && (
                     <div className="talkText">
-                      {message.text}
+                      <Text text={message.text} />
                       <img
                         src={message.photoUrl}
                         alt={message.uid}
@@ -111,10 +113,16 @@ const Messages = ({ scroll }) => {
               );
             })}
           {userModalOpen && (
-            <Modal closeModal={() => setUserModalOpen(false)}>
-              <div className="logout-btn">
-                <button onClick={() => signOut(auth)}>ログアウト</button>
-              </div>
+            <Modal
+              openModal={() => setUserModalOpen(true)}
+              closeModal={() => setUserModalOpen(false)}
+            >
+              <Button
+                buttonClass="logout-btn"
+                buttonAction={() => signOut(auth)}
+              >
+                ログアウト
+              </Button>
             </Modal>
           )}
         </div>
