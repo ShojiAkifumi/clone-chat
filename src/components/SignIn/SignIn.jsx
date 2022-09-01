@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import {
   signInWithRedirect,
+  signInWithPopup,
   GoogleAuthProvider,
   TwitterAuthProvider,
 } from "firebase/auth";
@@ -35,7 +36,29 @@ const SignIn = () => {
           </Button>
           <Button
             buttonClass="auth-btn twitter-btn"
-            buttonAction={() => signInWithRedirect(auth, twitterProvider)}
+            buttonAction={() =>
+              signInWithPopup(auth, twitterProvider)
+                .then((result) => {
+                  const credential =
+                    TwitterAuthProvider.credentialFromResult(result);
+                  const token = credential.accessToken;
+                  const secret = credential.secret;
+
+                  const user = result.user;
+                  // ...
+                })
+                .catch((error) => {
+                  const errorCode = error.code;
+                  console.log(errorCode);
+                  const errorMessage = error.message;
+                  console.log(errorMessage);
+                  const email = error.customData.email;
+                  console.log(email);
+                  const credential =
+                    TwitterAuthProvider.credentialFromError(error);
+                  console.log(credential);
+                })
+            }
           >
             Twitterでサインイン
           </Button>
