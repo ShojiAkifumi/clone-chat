@@ -57,7 +57,10 @@ const Messages = ({ scroll }) => {
               const message = s.data();
               let imageUrl = "";
               if (message.imageName) {
-                imageUrl = `https://firebasestorage.googleapis.com/v0/b/clone-chat-app-d93d3.appspot.com/o/images%2F${message.imageName}?alt=media&token=5e85100c-9318-4c49-a332-fd1594c8a099`;
+                imageUrl =
+                  process.env.REACT_APP_IMAGE_URL_1 +
+                  message.imageName +
+                  process.env.REACT_APP_IMAGE_URL_2;
                 hasImageRefs.current = [...hasImageRefs.current, createRef()];
                 currentBgNumRef.current = hasImageRefs.current.length - 1;
               }
