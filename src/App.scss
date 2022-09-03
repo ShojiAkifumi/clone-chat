@@ -526,16 +526,20 @@ body {
   background-color: #fff;
   border-radius: 15px;
   position: fixed;
-  padding: 30px 15px;
   width: min(600px, 90%);
   top: 50%;
+  max-height: 90vh;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   z-index: 9999;
   opacity: 0;
   animation: fade-animation 0.5s;
   animation-fill-mode: forwards;
-  cursor: default;
+  padding: 30px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   .modal-close-btn {
     position: absolute;
     right: 15px;

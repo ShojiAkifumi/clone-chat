@@ -9,7 +9,7 @@ const Modal = (props) => {
           className="modal-close-btn"
           onClick={props.closeModal}
         />
-        {props.children}
+        <div>{props.children}</div>
       </div>
     </>
   );
