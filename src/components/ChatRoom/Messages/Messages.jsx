@@ -120,10 +120,14 @@ const Messages = ({ scroll }) => {
               openModal={() => setUserModalOpen(true)}
               closeModal={() => setUserModalOpen(false)}
             >
-              <img
-                src={auth.currentUser.photoURL}
-                alt={auth.currentUser.displayName}
-              />
+              <div className="user-avatar-view">
+                <img
+                  src={auth.currentUser.photoURL}
+                  alt={auth.currentUser.displayName}
+                  width="70"
+                  height="70"
+                />
+              </div>
               <Button
                 buttonClass="logout-btn"
                 buttonAction={() => {
