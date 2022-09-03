@@ -3,19 +3,19 @@ import {
   signInWithRedirect,
   GoogleAuthProvider,
   TwitterAuthProvider,
-  FacebookAuthProvider,
 } from "firebase/auth";
 import { userContext } from "../../App";
 import Button from "../utility/Button";
 import { useState } from "react";
 import Modal from "../utility/Modal";
+import EmailPasswordForm from "./EmailPasswordForm";
 
 const SignIn = () => {
   const googleProvider = new GoogleAuthProvider();
   const twitterProvider = new TwitterAuthProvider();
-  const facebookProvider = new FacebookAuthProvider();
   const auth = useContext(userContext);
   const [isOpenSignin, setIsOpenSignin] = useState(false);
+  const [isCreateUser, setIsCreateUser] = useState(false);
   return (
     <>
       <Button
@@ -29,7 +29,11 @@ const SignIn = () => {
           openModal={() => setIsOpenSignin(true)}
           closeModal={() => setIsOpenSignin(false)}
         >
-          <h1>サインイン・新規登録</h1>
+          {isCreateUser ? <h1>ユーザー登録</h1> : <h1>サインイン</h1>}
+          <EmailPasswordForm isCreateUser={isCreateUser} />
+          <p className="auth-or">
+            <span>もしくは</span>
+          </p>
           <Button
             buttonClass="auth-btn google-btn"
             buttonAction={() => signInWithRedirect(auth, googleProvider)}
@@ -44,12 +48,18 @@ const SignIn = () => {
           >
             Twitterでサインイン
           </Button>
+          <p className="auth-or mt-56">
+            {isCreateUser ? (
+              <span>すでにアカウントをお持ちの方</span>
+            ) : (
+              <span>初めての方はこちら</span>
+            )}
+          </p>
           <Button
-            buttonClass="auth-btn facebook-btn"
-            buttonAction={() => signInWithRedirect(auth, facebookProvider)}
-            logo="facebook.svg"
+            buttonClass="switching-credential"
+            buttonAction={() => setIsCreateUser(!isCreateUser)}
           >
-            Facebookでサインイン
+            {isCreateUser ? "サインイン" : "ユーザー登録"}
           </Button>
         </Modal>
       )}

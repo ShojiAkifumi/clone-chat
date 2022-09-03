@@ -117,9 +117,16 @@ const Messages = ({ scroll }) => {
               openModal={() => setUserModalOpen(true)}
               closeModal={() => setUserModalOpen(false)}
             >
+              <img
+                src={auth.currentUser.photoURL}
+                alt={auth.currentUser.displayName}
+              />
               <Button
                 buttonClass="logout-btn"
-                buttonAction={() => signOut(auth)}
+                buttonAction={() => {
+                  setUserModalOpen(false);
+                  signOut(auth);
+                }}
               >
                 ログアウト
               </Button>

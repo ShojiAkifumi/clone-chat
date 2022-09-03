@@ -5,7 +5,7 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 const sendMessage = (message, imageData, user) => {
   const Data = {
     uid: user.uid,
-    photoUrl: user.photoURL,
+    photoUrl: user.photoURL ? imageData.photoURL : "./anonymity.png",
     text: message,
     imageName: imageData ? imageData.name : "",
     imageRatio: imageData ? imageData.ratio : "",
