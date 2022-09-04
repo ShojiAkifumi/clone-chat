@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { userContext } from "../../App";
 import Button from "../utility/Button";
@@ -12,7 +13,11 @@ const EmailPasswordForm = ({ isCreateUser }) => {
   const [password, setPassword] = useState("");
 
   const CreateUser = () => {
-    createUserWithEmailAndPassword(auth, email, password);
+    createUserWithEmailAndPassword(auth, email, password).then(() => {
+      updateProfile(auth.currentUser, {
+        photoURL: "./anonymity.png",
+      });
+    });
   };
 
   const SignIn = () => {

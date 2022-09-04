@@ -1,4 +1,5 @@
 import { useState, useEffect, createRef, useContext, useRef } from "react";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import useMessages from "./useMessages";
 import useScrollEffect from "./useScrollEffect";
 import { userContext } from "../../../App";
@@ -12,11 +13,15 @@ import Text from "./Text";
 const Messages = ({ scroll }) => {
   const [userModalOpen, setUserModalOpen] = useState(false);
 
+  const storage = getStorage();
+
   const auth = useContext(userContext);
   let LoginId = "";
   if (auth.currentUser) {
     LoginId = auth.currentUser.uid;
   }
+
+  console.log(auth.currentUser);
 
   const [snapshot, loading, error] = useMessages();
   error && console.log(error);
@@ -57,10 +62,16 @@ const Messages = ({ scroll }) => {
               const message = s.data();
               let imageUrl = "";
               if (message.imageName) {
-                imageUrl =
-                  process.env.REACT_APP_IMAGE_URL_1 +
-                  message.imageName +
-                  process.env.REACT_APP_IMAGE_URL_2;
+                getDownloadURL(
+                  ref(storage, `images/${message.imageName}`)
+                ).then((url) => {
+                  document
+                    .getElementById(`img-${index}`)
+                    .setAttribute("src", url);
+                  document.getElementById(
+                    `bg-${index}`
+                  ).style.backgroundImage = `url('${url}')`;
+                });
                 hasImageRefs.current = [...hasImageRefs.current, createRef()];
                 currentBgNumRef.current = hasImageRefs.current.length - 1;
               }
@@ -84,7 +95,11 @@ const Messages = ({ scroll }) => {
                     <div className="talkText">
                       <Text text={message.text} />
                       <img
-                        src={message.photoUrl}
+                        src={
+                          message.uid === LoginId
+                            ? auth.currentUser.photoURL
+                            : message.photoUrl
+                        }
                         alt={message.uid}
                         className="talkIcon"
                         width="36"
@@ -101,11 +116,13 @@ const Messages = ({ scroll }) => {
                     <>
                       <div
                         className={`back-ground`}
+                        id={`bg-${index}`}
                         style={{ backgroundImage: `url(${imageUrl})` }}
                       ></div>
                       <img
                         src={imageUrl}
                         alt={message.imageName}
+                        id={`img-${index}`}
                         className="talkImage"
                         height="250"
                         width={message.imageRatio * 250}
