@@ -2,10 +2,10 @@ import { useState, useContext, useRef } from "react";
 import { IconContext } from "react-icons";
 import { MdSend, MdArrowForwardIos, MdOutlineMoreHoriz } from "react-icons/md";
 import TextArea from "./TextArea";
-import UploadImageFile from "./UploadImageFile";
+import UploadImageFile from "../../utility/UploadImageFile";
 import useChangeTextArea from "./useChangeTextArea";
 import { userContext } from "../../../App";
-import sendData from "./sendData";
+import sendData from "../../utility/sendData";
 import ExMessges from "./ExMessges";
 import { BsArrowClockwise } from "react-icons/bs";
 

@@ -1,5 +1,5 @@
 import { ref, uploadBytes } from "firebase/storage";
-import { storage, db } from "../../../firebase";
+import { storage, db } from "../../firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 const sendMessage = (message, imageData, user) => {

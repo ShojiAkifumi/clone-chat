@@ -1,22 +1,30 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import Button from "../../utility/Button";
 import Modal from "../../utility/Modal";
 import { signOut } from "firebase/auth";
 import { userContext } from "../../../App";
-const UserProfile = (props) => {
+import uploadAvaterImage from "../../utility/uploadAvaterImage";
+
+const UserProfileModal = (props) => {
   const auth = useContext(userContext);
+  const [avatar, setAvatar] = useState(props.photoUrl);
   return (
-    <Modal
-      openModal={() => props.setUserModalOpen(true)}
-      closeModal={() => props.setUserModalOpen(false)}
-    >
+    <Modal openModal={props.openModal} closeModal={props.closeModal}>
       <div className="user-avatar-view">
-        <img src={props.photoUrl} alt="" width="70" height="70" />
+        <label htmlFor="avatar">
+          <img src={avatar} alt="aaaaa" width="100" height="100" />
+        </label>
+        <input
+          type="file"
+          name="avatar"
+          id="avatar"
+          onChange={(e) => uploadAvaterImage(e, auth, setAvatar)}
+        />
       </div>
       <Button
         buttonClass="logout-btn"
         buttonAction={() => {
-          props.setUserModalOpen(false);
+          props.closeModal();
           signOut(auth);
         }}
       >
@@ -26,4 +34,4 @@ const UserProfile = (props) => {
   );
 };
 
-export default UserProfile;
+export default UserProfileModal;

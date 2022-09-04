@@ -1,19 +1,16 @@
 import { useState, useEffect, createRef, useContext, useRef } from "react";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import useMessages from "./useMessages";
-import useScrollEffect from "./useScrollEffect";
+import { ref, getDownloadURL } from "firebase/storage";
+import useMessages from "../../utility/useMessages";
+import useScrollEffect from "../../utility/useScrollEffect";
 import { userContext } from "../../../App";
-import { signOut } from "firebase/auth";
-import Modal from "../../utility/Modal";
-import Button from "../../utility/Button";
 import { BsArrowClockwise } from "react-icons/bs";
-import { changeBgEffect } from "./changeBgEffect";
-import Text from "./Text";
+import { changeBgEffect } from "../../utility/changeBgEffect";
+import Text from "../../utility/Text";
+import { storage } from "../../../firebase";
+import UserProfileModal from "./UserProfile";
 
 const Messages = ({ scroll }) => {
   const [userModalOpen, setUserModalOpen] = useState(false);
-
-  const storage = getStorage();
 
   const auth = useContext(userContext);
   let LoginId = "";
@@ -133,28 +130,11 @@ const Messages = ({ scroll }) => {
               );
             })}
           {userModalOpen && (
-            <Modal
+            <UserProfileModal
               openModal={() => setUserModalOpen(true)}
               closeModal={() => setUserModalOpen(false)}
-            >
-              <div className="user-avatar-view">
-                <img
-                  src={auth.currentUser.photoURL}
-                  alt={auth.currentUser.displayName}
-                  width="70"
-                  height="70"
-                />
-              </div>
-              <Button
-                buttonClass="logout-btn"
-                buttonAction={() => {
-                  setUserModalOpen(false);
-                  signOut(auth);
-                }}
-              >
-                ログアウト
-              </Button>
-            </Modal>
+              photoUrl={auth.currentUser.photoURL}
+            />
           )}
         </div>
       )}
