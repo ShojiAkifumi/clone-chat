@@ -1,13 +1,14 @@
 import { useState, useEffect, createRef, useContext, useRef } from "react";
 import { ref, getDownloadURL } from "firebase/storage";
-import useMessages from "../../utility/useMessages";
-import useScrollEffect from "../../utility/useScrollEffect";
 import { userContext } from "../../../App";
 import { BsArrowClockwise } from "react-icons/bs";
+import useMessages from "../../utility/useMessages";
+import useScrollEffect from "../../utility/useScrollEffect";
 import { changeBgEffect } from "../../utility/changeBgEffect";
 import Text from "../../utility/Text";
 import { storage } from "../../../firebase";
 import UserProfileModal from "./UserProfile";
+import { useCallback } from "react";
 
 const Messages = ({ scroll }) => {
   const [userModalOpen, setUserModalOpen] = useState(false);
@@ -43,6 +44,12 @@ const Messages = ({ scroll }) => {
     currentBgNumRef.current === hasImageRefs.current.length - 1
   );
 
+  const openUserModal = useCallback(() => {
+    setUserModalOpen(true);
+  }, []);
+  const closeUserModal = useCallback(() => {
+    setUserModalOpen(false);
+  }, []);
   return (
     <>
       {loading ? (
@@ -102,9 +109,7 @@ const Messages = ({ scroll }) => {
                         width="36"
                         height="36"
                         onClick={
-                          message.uid === LoginId
-                            ? () => setUserModalOpen(true)
-                            : undefined
+                          message.uid === LoginId ? openUserModal : undefined
                         }
                       />
                     </div>
@@ -131,8 +136,8 @@ const Messages = ({ scroll }) => {
             })}
           {userModalOpen && (
             <UserProfileModal
-              openModal={() => setUserModalOpen(true)}
-              closeModal={() => setUserModalOpen(false)}
+              openModal={openUserModal}
+              closeModal={closeUserModal}
               photoUrl={auth.currentUser.photoURL}
             />
           )}
