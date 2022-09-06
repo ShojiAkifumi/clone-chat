@@ -220,12 +220,10 @@ body {
       img.talkIcon {
         position: absolute;
         user-select: none;
-        background-color: #1f5770;
         border-radius: 50%;
         bottom: -4px;
         opacity: 0.9;
-        border: solid 1.5px #fff;
-        box-shadow: inset 0 0 0 10px #fff;
+        filter: drop-shadow(1px 1px 2px #fff);
       }
     }
     .talkImage {
@@ -468,29 +466,6 @@ body {
   }
 }
 
-.singin-btn {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  padding: 15px;
-  background-color: #fffa;
-  button {
-    background-color: #65c8f1;
-    color: white;
-    font-size: 16px;
-    border: none;
-    font-weight: bolder;
-    padding: 10px 25px;
-    border-radius: 5px;
-    transition: 0.2s;
-    cursor: pointer;
-    &:hover {
-      background-color: #44a6d1;
-    }
-  }
-}
 .switching-credential {
   display: flex;
   justify-content: center;
@@ -553,13 +528,12 @@ body {
   }
 }
 
-.logout-btn {
+.button {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 15px;
   button {
-    background-color: #65c8f1;
-    color: white;
     font-size: 16px;
     border: none;
     font-weight: bolder;
@@ -567,24 +541,90 @@ body {
     border-radius: 5px;
     transition: 0.2s;
     cursor: pointer;
+  }
+}
+
+.singin-btn {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-color: #fffa;
+  button {
+    background-color: #65c8f1;
+    color: white;
     &:hover {
-      background-color: #128e8a;
+      background-color: #7fd1f4;
     }
   }
 }
 
+.logout-btn {
+  button {
+    background-color: #65c8f1;
+    color: white;
+    &:hover {
+      background-color: #7fd1f4;
+    }
+  }
+}
+.avatar-cancel-btns button {
+  background-color: #ccc;
+  color: white;
+  font-weight: bolder;
+  &:hover {
+    background-color: #ddd;
+  }
+}
+.avatar-submit-btn button {
+  background-color: #65c8f1;
+  color: white;
+  font-weight: bolder;
+  font-size: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+  &:hover {
+    background-color: #7fd1f4;
+  }
+}
 .user-avatar-view {
   display: flex;
   justify-content: center;
   margin-bottom: 32px;
   img {
     border-radius: 50%;
-    box-shadow: inset 0 0 0 5px #ccc;
     cursor: pointer;
-    border: solid 2px #ccc;
     height: auto;
   }
   input {
     display: none;
+  }
+}
+.crop-wrapper {
+  padding-bottom: 50vh;
+  position: relative;
+  .reactEasyCrop_Container {
+    .reactEasyCrop_CropArea {
+      max-width: 80%;
+      border-color: #00a0ff;
+    }
+  }
+}
+.controls {
+  padding: 20px 0;
+  z-index: 10000;
+  background-color: #fffc;
+  input[type="range"] {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .crop-btns {
+    flex-wrap: wrap-reverse;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .button {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
   }
 }

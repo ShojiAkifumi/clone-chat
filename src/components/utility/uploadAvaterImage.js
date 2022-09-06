@@ -19,9 +19,8 @@ const resizeFile = (file) =>
     );
   });
 
-const uploadAvaterImage = async (e, auth, setAvatar) => {
+const uploadAvaterImage = async (auth, file) => {
   const avatarRef = ref(storage, `avatars/avatar-${auth.currentUser.uid}.png`);
-  const file = e.target.files[0];
   if (file !== undefined) {
     if (/image.*/.exec(file.type)) {
       await resizeFile(file).then((blob) => {
@@ -30,14 +29,12 @@ const uploadAvaterImage = async (e, auth, setAvatar) => {
             updateProfile(auth.currentUser, {
               photoURL: url,
             });
-            setAvatar(url);
           });
         });
       });
     } else {
       window.alert("画像のみアップロードできます");
     }
-    e.target.value = "";
   }
 };
 
