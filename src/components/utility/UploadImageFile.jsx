@@ -11,7 +11,7 @@ const resizeFile = (file) =>
       file,
       1920,
       1280,
-      "JPEG",
+      "WEBP",
       80,
       0,
       (uri) => {

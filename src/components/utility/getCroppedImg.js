@@ -49,6 +49,6 @@ export default async function getCroppedImg(imageSrc, pixelCrop) {
   return new Promise((resolve, reject) => {
     canvas.toBlob((file) => {
       if (file !== null) resolve([file, URL.createObjectURL(file)]);
-    }, "image/png");
+    }, "image/webp");
   });
 }
