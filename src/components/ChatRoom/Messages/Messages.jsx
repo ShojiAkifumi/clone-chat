@@ -111,6 +111,7 @@ const Messages = ({ scroll }) => {
                         onClick={
                           message.uid === LoginId ? openUserModal : undefined
                         }
+                        loading="eager"
                       />
                     </div>
                   )}
