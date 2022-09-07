@@ -280,7 +280,7 @@ body {
         }
         img.talkIcon {
           left: -63px;
-          transform: rotateY(180deg);
+          transform: scale(-1, 1);
         }
       }
       &.new {
@@ -303,7 +303,7 @@ body {
         margin-right: 18px;
         &::before {
           right: -17.5px;
-          transform: rotateY(180deg);
+          transform: scale(-1, 1);
         }
         &::after {
           border-radius: 0 3px;
