@@ -79,6 +79,13 @@ const Messages = ({ scroll }) => {
                 hasImageRefs.current = [...hasImageRefs.current, createRef()];
                 currentBgNumRef.current = hasImageRefs.current.length - 1;
               }
+              const createTimeString = message?.createdAt
+                .toDate()
+                .toLocaleTimeString();
+              const time = createTimeString.substring(
+                0,
+                createTimeString.lastIndexOf(":")
+              );
               return (
                 <div
                   key={s.id}
@@ -98,20 +105,23 @@ const Messages = ({ scroll }) => {
                   {message.text && (
                     <div className="talkText">
                       <Text text={message.text} />
-                      <img
-                        src={
-                          message.uid === LoginId
-                            ? auth.currentUser.photoURL
-                            : message.photoUrl
-                        }
-                        alt={message.uid}
-                        className="talkIcon"
-                        width="36"
-                        height="36"
-                        onClick={
-                          message.uid === LoginId ? openUserModal : undefined
-                        }
-                      />
+                      <div className="user-block">
+                        <time>{time}</time>
+                        <img
+                          src={
+                            message.uid === LoginId
+                              ? auth.currentUser.photoURL
+                              : message.photoUrl
+                          }
+                          alt={message.uid}
+                          className="talkIcon"
+                          width="36"
+                          height="36"
+                          onClick={
+                            message.uid === LoginId ? openUserModal : undefined
+                          }
+                        />
+                      </div>
                     </div>
                   )}
                   {message.imageName && (

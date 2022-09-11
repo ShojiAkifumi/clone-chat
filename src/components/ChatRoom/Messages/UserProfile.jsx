@@ -63,22 +63,22 @@ const UserProfileModal = (props) => {
             />
           </div>
           <Button
-            buttonClass="logout-btn"
+            buttonClass="close-btn"
             buttonAction={() => {
               props.closeModal();
             }}
           >
             閉じる
           </Button>
-          <Button
-            buttonClass="logout-btn"
-            buttonAction={() => {
+          <div
+            className="logout-btn"
+            conClick={() => {
               props.closeModal();
               signOut(auth);
             }}
           >
             ログアウト
-          </Button>
+          </div>
         </Modal>
       ) : (
         <>
