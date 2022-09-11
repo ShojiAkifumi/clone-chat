@@ -79,13 +79,13 @@ const Messages = ({ scroll }) => {
                 hasImageRefs.current = [...hasImageRefs.current, createRef()];
                 currentBgNumRef.current = hasImageRefs.current.length - 1;
               }
-              const createTimeString = message?.createdAt
-                .toDate()
-                .toLocaleTimeString();
-              const time = createTimeString.substring(
-                0,
-                createTimeString.lastIndexOf(":")
-              );
+              // const createTimeString = message?.createdAt
+              //   .toDate()
+              //   .toLocaleTimeString();
+              // const time = createTimeString.substring(
+              //   0,
+              //   createTimeString.lastIndexOf(":")
+              // );
               return (
                 <div
                   key={s.id}
@@ -106,7 +106,7 @@ const Messages = ({ scroll }) => {
                     <div className="talkText">
                       <Text text={message.text} />
                       <div className="user-block">
-                        <time>{time}</time>
+                        {/* <time>{time}</time> */}
                         <img
                           src={
                             message.uid === LoginId
