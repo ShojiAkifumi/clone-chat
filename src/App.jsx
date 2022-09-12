@@ -15,8 +15,8 @@ function App() {
     <userContext.Provider value={auth}>
       <div className="App">
         <Messages scroll={scroll} />
-        <div ref={scroll}></div>
         {user ? <FormField scroll={scroll} /> : <SignIn />}
+        <div ref={scroll} id="scroll"></div>
       </div>
     </userContext.Provider>
   );

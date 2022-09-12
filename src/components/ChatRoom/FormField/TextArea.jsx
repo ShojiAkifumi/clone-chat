@@ -16,11 +16,9 @@ const TextArea = ({ message, scroll, changeTextArea, textareaRef }) => {
       wrap="off"
       ref={textareaRef}
       onClick={() =>
-        setTimeout(
-          () =>
-            scroll.current.scrollIntoView({ block: "end", behavior: "smooth" }),
-          400
-        )
+        setTimeout(() => {
+          scroll.current.scrollIntoView({ block: "end", behavior: "smooth" });
+        }, 400)
       }
     ></textarea>
   );
