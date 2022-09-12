@@ -36,14 +36,26 @@ const SignIn = () => {
           </p>
           <Button
             buttonClass="auth-btn google-btn"
-            buttonAction={() => signInWithRedirect(auth, googleProvider)}
+            buttonAction={() =>
+              signInWithRedirect(auth, googleProvider).catch((error) => {
+                window.alert(
+                  `ログインに失敗しました\nエラー内容: ${error.message}`
+                );
+              })
+            }
             logo="google.svg"
           >
             Googleでサインイン
           </Button>
           <Button
             buttonClass="auth-btn twitter-btn"
-            buttonAction={() => signInWithRedirect(auth, twitterProvider)}
+            buttonAction={() =>
+              signInWithRedirect(auth, twitterProvider).catch((error) => {
+                window.alert(
+                  `ログインに失敗しました\nエラー内容: ${error.message}`
+                );
+              })
+            }
             logo="twitter.svg"
           >
             Twitterでサインイン

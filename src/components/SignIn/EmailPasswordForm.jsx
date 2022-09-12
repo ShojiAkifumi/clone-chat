@@ -13,15 +13,21 @@ const EmailPasswordForm = ({ isCreateUser }) => {
   const [password, setPassword] = useState("");
 
   const CreateUser = () => {
-    createUserWithEmailAndPassword(auth, email, password).then(() => {
-      updateProfile(auth.currentUser, {
-        photoURL: "./anonymity.png",
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        updateProfile(auth.currentUser, {
+          photoURL: "./anonymity.png",
+        });
+      })
+      .catch((error) => {
+        window.alert(`ログインに失敗しました\nエラー内容: ${error.message}`);
       });
-    });
   };
 
   const SignIn = () => {
-    signInWithEmailAndPassword(auth, email, password);
+    signInWithEmailAndPassword(auth, email, password).catch((error) => {
+      window.alert(`ログインに失敗しました\nエラー内容: ${error.message}`);
+    });
   };
   return (
     <div>
