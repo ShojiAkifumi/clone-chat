@@ -69,23 +69,25 @@ const Messages = ({ scroll }) => {
                 getDownloadURL(
                   ref(storage, `images/${message.imageName}`)
                 ).then((url) => {
-                  document
-                    .getElementById(`img-${index}`)
-                    .setAttribute("src", url);
-                  document.getElementById(
-                    `bg-${index}`
-                  ).style.backgroundImage = `url('${url}')`;
+                  const img = document.getElementById(`img-${index}`);
+                  const bg = document.getElementById(`bg-${index}`);
+                  if (bg && img) {
+                    img.setAttribute("src", url);
+                    bg.style.backgroundImage = `url('${url}')`;
+                  }
                 });
                 hasImageRefs.current = [...hasImageRefs.current, createRef()];
                 currentBgNumRef.current = hasImageRefs.current.length - 1;
               }
-              // const createTimeString = message?.createdAt
-              //   .toDate()
-              //   .toLocaleTimeString();
-              // const time = createTimeString.substring(
-              //   0,
-              //   createTimeString.lastIndexOf(":")
-              // );
+              if (message.createdAt) {
+                const createTimeString = message.createdAt
+                  ?.toDate()
+                  .toLocaleTimeString();
+                var time = createTimeString.substring(
+                  0,
+                  createTimeString.lastIndexOf(":")
+                );
+              }
               return (
                 <div
                   key={s.id}
@@ -106,7 +108,7 @@ const Messages = ({ scroll }) => {
                     <div className="talkText">
                       <Text text={message.text} />
                       <div className="user-block">
-                        {/* <time>{time}</time> */}
+                        <time>{time}</time>
                         <img
                           src={
                             message.uid === LoginId

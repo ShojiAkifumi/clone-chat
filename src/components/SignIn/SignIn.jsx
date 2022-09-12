@@ -15,7 +15,7 @@ const SignIn = () => {
   const twitterProvider = new TwitterAuthProvider();
   const auth = useContext(userContext);
   const [isOpenSignin, setIsOpenSignin] = useState(false);
-  const [isCreateUser, setIsCreateUser] = useState(false);
+  const [isCreateUser, setIsCreateUser] = useState(true);
   return (
     <>
       <Button
@@ -29,7 +29,7 @@ const SignIn = () => {
           openModal={() => setIsOpenSignin(true)}
           closeModal={() => setIsOpenSignin(false)}
         >
-          {isCreateUser ? <h1>ユーザー登録</h1> : <h1>サインイン</h1>}
+          <h1>サインイン</h1>
           <EmailPasswordForm isCreateUser={isCreateUser} />
           <p className="auth-or">
             <span>もしくは</span>
@@ -48,8 +48,7 @@ const SignIn = () => {
           >
             Twitterでサインイン
           </Button>
-
-          <p className="auth-or mt-56">
+          <p className="auth-or">
             {isCreateUser ? (
               <span>すでにアカウントをお持ちの方</span>
             ) : (

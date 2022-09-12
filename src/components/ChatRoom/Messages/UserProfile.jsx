@@ -70,15 +70,15 @@ const UserProfileModal = (props) => {
           >
             閉じる
           </Button>
-          <div
+          <button
             className="logout-btn"
-            conClick={() => {
+            onClick={() => {
               props.closeModal();
               signOut(auth);
             }}
           >
             ログアウト
-          </div>
+          </button>
         </Modal>
       ) : (
         <>
