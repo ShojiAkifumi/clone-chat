@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext, useCallback } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import Button from "../../utility/Button";
 import Modal from "../../utility/Modal";
 import { signOut } from "firebase/auth";

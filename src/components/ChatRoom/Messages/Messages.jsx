@@ -50,6 +50,13 @@ const Messages = ({ scroll }) => {
   const closeUserModal = useCallback(() => {
     setUserModalOpen(false);
   }, []);
+
+  const ua = navigator.userAgent;
+  const isIos =
+    ua.indexOf("iPhone") >= 0 ||
+    ua.indexOf("iPad") >= 0 ||
+    ua.indexOf("iPod") >= 0 ||
+    /^((?!chrome|android).)*safari/i.test(ua);
   return (
     <>
       {loading ? (
@@ -100,7 +107,7 @@ const Messages = ({ scroll }) => {
                   }`}
                 >
                   {message.text && (
-                    <div className="talkText">
+                    <div className={`talkText ${isIos ? "is-ios" : "defult"}`}>
                       <Text text={message.text} />
                       <div className="user-block">
                         <time>{time}</time>
