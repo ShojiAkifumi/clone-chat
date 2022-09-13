@@ -6,7 +6,6 @@ const sendMessage = (message, imageData, user) => {
   if (imageData) {
     addDoc(collection(db, "messages"), {
       uid: user.uid,
-      uName: user.displayName,
       photoUrl: user.photoURL,
       text: message,
       imageName: imageData ? imageData.name : "",
@@ -16,7 +15,6 @@ const sendMessage = (message, imageData, user) => {
   } else {
     addDoc(collection(db, "messages"), {
       uid: user.uid,
-      uName: user.displayName,
       photoUrl: user.photoURL,
       text: message,
       createdAt: serverTimestamp(),

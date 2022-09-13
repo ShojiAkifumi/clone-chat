@@ -10,14 +10,10 @@ import { MdModeEdit } from "react-icons/md";
 
 const UserProfileModal = (props) => {
   const auth = useContext(userContext);
-  const nameRef = useRef(null);
-  const [avatar, setAvatar] = useState(props.photoUrl);
-  const [name, setName] = useState(props.name);
 
   const [cropperIsOpen, setCropperIsOpen] = useState(false);
 
   const [imgSrc, setImgSrc] = useState("");
-  const [isEdit, setIsEdit] = useState(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const ASPECT = 1;
@@ -28,11 +24,11 @@ const UserProfileModal = (props) => {
     try {
       const [file, url] = await getCroppedImg(imgSrc, croppedAreaPixels);
       uploadAvaterImage(auth, file);
-      setAvatar(url);
+      props.setAvatar(url);
     } catch (e) {
       console.error(e);
     }
-  }, [auth, croppedAreaPixels, imgSrc]);
+  }, [props, auth, croppedAreaPixels, imgSrc]);
 
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -57,49 +53,18 @@ const UserProfileModal = (props) => {
         <Modal openModal={props.openModal} closeModal={props.closeModal}>
           <div className="user-avatar-view">
             <label htmlFor="avatar">
-              <img src={avatar} alt={props.name} width="100" height="100" />
+              <img src={props.avatar} alt="" width="100" height="100" />
             </label>
-            {props.isMe && (
-              <input
-                type="file"
-                name="avatar"
-                id="avatar"
-                onChange={onFileChange}
-              />
-            )}
+            <input
+              type="file"
+              name="avatar"
+              id="avatar"
+              onChange={onFileChange}
+            />
+            <label htmlFor="avatar" className="edit-icon">
+              <MdModeEdit />
+            </label>
           </div>
-          {isEdit ? (
-            <p className="name-input">
-              <input
-                value={name}
-                className="text-box"
-                name="name"
-                ref={nameRef}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <Button
-                buttonClass="close-btn"
-                buttonAction={() => {
-                  props.closeModal();
-                }}
-              >
-                OK
-              </Button>
-            </p>
-          ) : (
-            <p className="user-name">
-              {props.name}
-              {props.isMe && (
-                <MdModeEdit
-                  onClick={() => {
-                    setIsEdit(true);
-                    nameRef.current.focus();
-                  }}
-                  className="edit-btn"
-                />
-              )}
-            </p>
-          )}
 
           <Button
             buttonClass="close-btn"
@@ -109,17 +74,15 @@ const UserProfileModal = (props) => {
           >
             閉じる
           </Button>
-          {props.isMe && (
-            <button
-              className="logout-btn"
-              onClick={() => {
-                props.closeModal();
-                signOut(auth);
-              }}
-            >
-              ログアウト
-            </button>
-          )}
+          <button
+            className="logout-btn"
+            onClick={() => {
+              props.closeModal();
+              signOut(auth);
+            }}
+          >
+            ログアウト
+          </button>
         </Modal>
       ) : (
         <>
@@ -165,7 +128,7 @@ const UserProfileModal = (props) => {
                     pushCroppedImage();
                   }}
                 >
-                  閉じる
+                  OK
                 </Button>
               </div>
             </div>

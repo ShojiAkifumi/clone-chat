@@ -598,6 +598,7 @@ body {
   background-color: #ccc;
   color: white;
   font-weight: bolder;
+  margin-right: 8px;
   &:hover {
     background-color: #ddd;
   }
@@ -614,8 +615,9 @@ body {
   }
 }
 .user-avatar-view {
-  display: flex;
-  justify-content: center;
+  width: fit-content;
+  margin: 0 auto 24px;
+  position: relative;
   img {
     border-radius: 50%;
     border: solid 2px#6BC9F1;
@@ -624,6 +626,17 @@ body {
   }
   input {
     display: none;
+  }
+  .edit-icon {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    font-size: 1.1em;
+    color: #fff;
+    border-radius: 50%;
+    padding: 5px;
+    background-color: #aaa;
+    cursor: pointer;
   }
 }
 .user-name {

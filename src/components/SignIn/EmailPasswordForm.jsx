@@ -17,6 +17,7 @@ const EmailPasswordForm = ({ isCreateUser }) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
         updateProfile(auth.currentUser, {
+          uName: "名無しさん",
           photoURL: "./anonymity.png",
         });
       })
