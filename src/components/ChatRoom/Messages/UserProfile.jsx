@@ -26,14 +26,13 @@ const UserProfileModal = (props) => {
   const pushCroppedImage = useCallback(async () => {
     if (!croppedAreaPixels) return;
     try {
-      props.setAvatarUrl(imgSrc);
       const [file, url] = await getCroppedImg(imgSrc, croppedAreaPixels);
       uploadAvaterImage(auth, file);
       setAvatar(url);
     } catch (e) {
       console.error(e);
     }
-  }, [props, auth, croppedAreaPixels, imgSrc]);
+  }, [auth, croppedAreaPixels, imgSrc]);
 
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
