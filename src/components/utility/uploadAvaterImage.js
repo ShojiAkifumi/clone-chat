@@ -20,7 +20,7 @@ const resizeFile = (file) =>
   });
 
 const uploadAvaterImage = async (auth, file) => {
-  const avatarRef = ref(storage, `avatars/avatar-${auth.currentUser.uid}.png`);
+  const avatarRef = ref(storage, `avatars/avatar-${auth.currentUser.uid}.webp`);
   if (file !== undefined) {
     if (/image.*/.exec(file.type)) {
       await resizeFile(file).then((blob) => {

@@ -28,6 +28,7 @@ const sendData = (message = "", imageData = "", user, setIsUpLoading) => {
   if (imageData) {
     setIsUpLoading(true);
     const imagesRef = ref(storage, `images/${imageData.name}`);
+    console.log(imageData.name);
     uploadBytes(imagesRef, imageData.data).then(() => {
       sendMessage(message, imageData, user);
       setIsUpLoading(false);

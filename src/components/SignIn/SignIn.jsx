@@ -30,10 +30,7 @@ const SignIn = () => {
           closeModal={() => setIsOpenSignin(false)}
         >
           <h1>サインイン</h1>
-          <EmailPasswordForm isCreateUser={isCreateUser} />
-          <p className="auth-or">
-            <span>もしくは</span>
-          </p>
+
           <Button
             buttonClass="auth-btn google-btn"
             buttonAction={() =>
@@ -60,6 +57,10 @@ const SignIn = () => {
           >
             Twitterでサインイン
           </Button>
+          <p className="auth-or">
+            <span>もしくは</span>
+          </p>
+          <EmailPasswordForm isCreateUser={isCreateUser} />
           <p className="auth-or">
             {isCreateUser ? (
               <span>すでにアカウントをお持ちの方</span>

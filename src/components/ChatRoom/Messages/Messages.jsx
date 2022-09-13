@@ -1,12 +1,10 @@
 import { useState, useEffect, createRef, useContext, useRef } from "react";
-import { ref, getDownloadURL } from "firebase/storage";
 import { userContext } from "../../../App";
 import { BsArrowClockwise } from "react-icons/bs";
 import useMessages from "../../utility/useMessages";
 import useScrollEffect from "../../utility/useScrollEffect";
 import { changeBgEffect } from "../../utility/changeBgEffect";
 import Text from "../../utility/Text";
-import { storage } from "../../../firebase";
 import UserProfileModal from "./UserProfile";
 import { useCallback } from "react";
 
@@ -70,19 +68,13 @@ const Messages = ({ scroll }) => {
                 hasImageRefs.current = [];
               }
               const message = s.data();
-              const imageUrl = "";
+              let imageUrl = "";
               const isMe = message.uid === LoginId;
               if (message.imageName) {
-                getDownloadURL(
-                  ref(storage, `images/${message.imageName}`)
-                ).then((url) => {
-                  const img = document.getElementById(`img-${index}`);
-                  const bg = document.getElementById(`bg-${index}`);
-                  if (bg && img) {
-                    img.setAttribute("src", url);
-                    bg.style.backgroundImage = `url('${url}')`;
-                  }
-                });
+                imageUrl =
+                  process.env.REACT_APP_IMAGE_URL_1 +
+                  message.imageName +
+                  process.env.REACT_APP_IMAGE_URL_2;
                 hasImageRefs.current = [...hasImageRefs.current, createRef()];
                 currentBgNumRef.current = hasImageRefs.current.length - 1;
               }
