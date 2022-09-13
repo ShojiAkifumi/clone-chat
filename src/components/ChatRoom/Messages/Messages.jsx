@@ -42,6 +42,8 @@ const Messages = ({ scroll }) => {
     currentBgNumRef.current === hasImageRefs.current.length - 1
   );
 
+  const [avatarUrl, setAvatarUrl] = useState(auth.currentUser.photoURL);
+
   const idSwitchRef = useRef("");
   const setNameRef = useRef("");
   const setAvatarRef = useRef("");
@@ -109,9 +111,7 @@ const Messages = ({ scroll }) => {
                       <div className="user-block">
                         <time>{time}</time>
                         <img
-                          src={
-                            isMe ? auth.currentUser.photoURL : message.photoUrl
-                          }
+                          src={isMe ? avatarUrl : message.photoUrl}
                           alt={message.uid}
                           className="talkIcon"
                           width="36"
@@ -122,9 +122,7 @@ const Messages = ({ scroll }) => {
                               isMe
                                 ? auth.currentUser.displayName
                                 : message.uName,
-                              isMe
-                                ? auth.currentUser.photoURL
-                                : message.photoUrl
+                              isMe ? avatarUrl : message.photoUrl
                             )
                           }
                         />
@@ -158,6 +156,7 @@ const Messages = ({ scroll }) => {
               isMe={idSwitchRef.current}
               name={setNameRef.current}
               photoUrl={setAvatarRef.current}
+              setAvatarUrl={setAvatarUrl}
             />
           )}
         </div>
