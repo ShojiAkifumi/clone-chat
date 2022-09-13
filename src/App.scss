@@ -590,7 +590,7 @@ body {
   font-weight: normal;
   width: fit-content;
   cursor: pointer;
-  margin: 20px auto;
+  margin: 0 auto;
   &:hover {
     color: #00a0ff;
   }
@@ -617,9 +617,9 @@ body {
 .user-avatar-view {
   display: flex;
   justify-content: center;
-  margin-bottom: 32px;
   img {
     border-radius: 50%;
+    border: solid 2px#6BC9F1;
     cursor: pointer;
     height: auto;
   }
@@ -627,12 +627,30 @@ body {
     display: none;
   }
 }
+.user-name {
+  text-align: center;
+  font-size: 1.4em;
+  margin-bottom: 48px;
+}
+.edit-btn {
+  cursor: pointer;
+}
+.name-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin: 16px auto 48px;
+  .text-box {
+    margin-right: 8px;
+    margin-bottom: 0;
+  }
+}
 .crop-wrapper {
   padding-bottom: 50vh;
   position: relative;
   .reactEasyCrop_Container {
     .reactEasyCrop_CropArea {
-      max-width: 80%;
       border-color: #00a0ff;
     }
   }

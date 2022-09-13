@@ -27,12 +27,14 @@ const UploadImageFile = ({ imageData, setImageData, setOpenMedia }) => {
     if (file !== undefined) {
       if (/image.*/.exec(file.type)) {
         await resizeFile(file).then((resizefiles) => {
-          let image = new Image(),
+          const imgName =
+            file.name.substring(0, file.name.lastIndexOf(".")) + ".webp";
+          const image = new Image(),
             blobURL = URL.createObjectURL(resizefiles);
           image.src = blobURL;
           image.onload = function () {
             setImageData({
-              name: file.name,
+              name: imgName,
               data: resizefiles,
               ratio: image.width / image.height,
               localUrl: blobURL,

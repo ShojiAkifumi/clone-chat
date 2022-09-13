@@ -44,7 +44,13 @@ const Messages = ({ scroll }) => {
     currentBgNumRef.current === hasImageRefs.current.length - 1
   );
 
-  const openUserModal = useCallback(() => {
+  const idSwitchRef = useRef("");
+  const setNameRef = useRef("");
+  const setAvatarRef = useRef("");
+  const openUserModal = useCallback((isMe, name, avatar) => {
+    idSwitchRef.current = isMe;
+    setNameRef.current = name;
+    setAvatarRef.current = avatar;
     setUserModalOpen(true);
   }, []);
   const closeUserModal = useCallback(() => {
@@ -64,7 +70,8 @@ const Messages = ({ scroll }) => {
                 hasImageRefs.current = [];
               }
               const message = s.data();
-              let imageUrl = "";
+              const imageUrl = "";
+              const isMe = message.uid === LoginId;
               if (message.imageName) {
                 getDownloadURL(
                   ref(storage, `images/${message.imageName}`)
@@ -96,7 +103,7 @@ const Messages = ({ scroll }) => {
                       ? hasImageRefs.current[currentBgNumRef.current]
                       : null
                   }
-                  className={`talk ${message.uid === LoginId ? "me" : "reply"}${
+                  className={`talk ${isMe ? "me" : "reply"}${
                     message.createdAt ? " loaded" : ""
                   }${
                     2 > Date.now() / 1000 - message.createdAt?.seconds
@@ -111,16 +118,22 @@ const Messages = ({ scroll }) => {
                         <time>{time}</time>
                         <img
                           src={
-                            message.uid === LoginId
-                              ? auth.currentUser.photoURL
-                              : message.photoUrl
+                            isMe ? auth.currentUser.photoURL : message.photoUrl
                           }
                           alt={message.uid}
                           className="talkIcon"
                           width="36"
                           height="36"
-                          onClick={
-                            message.uid === LoginId ? openUserModal : undefined
+                          onClick={() =>
+                            openUserModal(
+                              isMe,
+                              isMe
+                                ? auth.currentUser.displayName
+                                : message.uName,
+                              isMe
+                                ? auth.currentUser.photoURL
+                                : message.photoUrl
+                            )
                           }
                         />
                       </div>
@@ -150,7 +163,9 @@ const Messages = ({ scroll }) => {
             <UserProfileModal
               openModal={openUserModal}
               closeModal={closeUserModal}
-              photoUrl={auth.currentUser.photoURL}
+              isMe={idSwitchRef.current}
+              name={setNameRef.current}
+              photoUrl={setAvatarRef.current}
             />
           )}
         </div>

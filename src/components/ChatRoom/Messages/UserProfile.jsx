@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from "react";
+import React, { useRef, useState, useContext, useCallback } from "react";
 import Button from "../../utility/Button";
 import Modal from "../../utility/Modal";
 import { signOut } from "firebase/auth";
@@ -6,14 +6,18 @@ import { userContext } from "../../../App";
 import Cropper from "react-easy-crop";
 import uploadAvaterImage from "../../utility/uploadAvaterImage";
 import getCroppedImg from "../../utility/getCroppedImg";
+import { MdModeEdit } from "react-icons/md";
 
 const UserProfileModal = (props) => {
   const auth = useContext(userContext);
+  const nameRef = useRef(null);
   const [avatar, setAvatar] = useState(props.photoUrl);
+  const [name, setName] = useState(props.name);
 
   const [cropperIsOpen, setCropperIsOpen] = useState(false);
 
   const [imgSrc, setImgSrc] = useState("");
+  const [isEdit, setIsEdit] = useState(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const ASPECT = 1;
@@ -53,15 +57,50 @@ const UserProfileModal = (props) => {
         <Modal openModal={props.openModal} closeModal={props.closeModal}>
           <div className="user-avatar-view">
             <label htmlFor="avatar">
-              <img src={avatar} alt="aaaaa" width="100" height="100" />
+              <img src={avatar} alt={props.name} width="100" height="100" />
             </label>
-            <input
-              type="file"
-              name="avatar"
-              id="avatar"
-              onChange={onFileChange}
-            />
+            {props.isMe && (
+              <input
+                type="file"
+                name="avatar"
+                id="avatar"
+                onChange={onFileChange}
+              />
+            )}
           </div>
+          {isEdit ? (
+            <p className="name-input">
+              <input
+                value={name}
+                className="text-box"
+                name="name"
+                ref={nameRef}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <Button
+                buttonClass="close-btn"
+                buttonAction={() => {
+                  props.closeModal();
+                }}
+              >
+                OK
+              </Button>
+            </p>
+          ) : (
+            <p className="user-name">
+              {props.name}
+              {props.isMe && (
+                <MdModeEdit
+                  onClick={() => {
+                    setIsEdit(true);
+                    nameRef.current.focus();
+                  }}
+                  className="edit-btn"
+                />
+              )}
+            </p>
+          )}
+
           <Button
             buttonClass="close-btn"
             buttonAction={() => {
@@ -70,15 +109,17 @@ const UserProfileModal = (props) => {
           >
             閉じる
           </Button>
-          <button
-            className="logout-btn"
-            onClick={() => {
-              props.closeModal();
-              signOut(auth);
-            }}
-          >
-            ログアウト
-          </button>
+          {props.isMe && (
+            <button
+              className="logout-btn"
+              onClick={() => {
+                props.closeModal();
+                signOut(auth);
+              }}
+            >
+              ログアウト
+            </button>
+          )}
         </Modal>
       ) : (
         <>
@@ -124,7 +165,7 @@ const UserProfileModal = (props) => {
                     pushCroppedImage();
                   }}
                 >
-                  OK
+                  閉じる
                 </Button>
               </div>
             </div>
