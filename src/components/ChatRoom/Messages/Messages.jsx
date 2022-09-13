@@ -140,7 +140,7 @@ const Messages = ({ scroll }) => {
                       ></div>
                       <img
                         src={imageUrl}
-                        alt={message.imageName}
+                        alt=""
                         id={`img-${index}`}
                         className="talkImage"
                         height="250"
